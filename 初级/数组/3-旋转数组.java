@@ -1,0 +1,37 @@
+/*
+旋转数组
+将包含 n 个元素的数组向右旋转 k 步。
+例如，如果  n = 7 ,  k = 3，给定数组  [1,2,3,4,5,6,7]  ，向右旋转后的结果为 [5,6,7,1,2,3,4]。
+注意:
+尽可能找到更多的解决方案，这里最少有三种不同的方法解决这个问题。
+要求空间复杂度为 O(1)
+关联的问题: 反转字符串中的单词 II
+*/ 
+
+
+//长度为7的数组，向右旋转3步，数字的位置加3之后大于7的都要再从0号位置重新开始计算剩余的步子。这点特性就可以很好的用到求余。
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int[] temp = Arrays.copyOf(nums,nums.length);
+        for(int i = 0; i<nums.length; i++){
+            nums[(i+k)%nums.length] = temp[i];
+        }
+    }
+}
+
+
+
+
+
+//使用System.arraycopy的技巧
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int length = nums.length;
+        int newnums[] = new int[length+k];
+        System.arraycopy(nums, 0, newnums, k, length);
+        for(int i=k-1;i>=0;i--){
+        	newnums[i] = newnums[i+length];
+        }
+        System.arraycopy(newnums, 0, nums, 0, length);
+    }
+}
