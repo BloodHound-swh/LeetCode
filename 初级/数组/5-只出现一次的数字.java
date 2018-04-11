@@ -6,6 +6,9 @@
  */
 
 //先排序，之后使用循环，但是效率不高
+//1. 对数组进行排序。 
+//2. 遍历一次数组，将array[i]分别与array[i-1]和array[i+1]作比较，若都不相同，则找到只出现一次的值。 
+//3. 注意处理第一个数字和最后一个数字的边界情况。
 class Solution {
     public int singleNumber(int[] nums) {
         Arrays.sort(nums);
