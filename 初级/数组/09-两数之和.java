@@ -29,7 +29,7 @@ class Solution {
 
 
 //用哈希表先把数组中的数字和对应的下标存储一遍，即数字作为键，下标作为值，存储.
-//当遍历数组的时候用target-nums[i]，得到差k，然后在map中找是否存在 k，找到即返回k所对应的value,也就是所对应的数组下标。
+//当遍历数组的时候用target-nums[i]，得到差v，然后在map中找是否存在 v，找到即返回v所对应的value,也就是所对应的数组下标。
 class Solution {  
     public int[] twoSum(int[] nums, int target) {  
         int[] result = new int[2];  

@@ -23,7 +23,7 @@ class Solution {
 
 
 
-//使用System.arraycopy的技巧
+//使用System.arraycopy的技巧，建立一个length+k的数组，将从自己的第k位开始拷贝原数组，在将前k位赋值为自己的最后k位，再重新拷贝回原数组
 class Solution {
     public void rotate(int[] nums, int k) {
         int length = nums.length;
