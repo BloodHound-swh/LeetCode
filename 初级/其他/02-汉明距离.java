@@ -54,7 +54,7 @@ class Solution {
         int Distance = 0;
         int z = x ^ y;
         while(z != 0){
-            z = z & (z - 1);
+            z = z & (z - 1); 
             Distance ++;
         }
         return Distance;
