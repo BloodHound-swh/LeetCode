@@ -29,6 +29,8 @@
  *     ListNode(int x) { val = x; }
  * }
  */
+
+//单独“分出”两个链表，然后头尾相接
 class Solution {
     public ListNode oddEvenList(ListNode head) {
         if (head == null || head.next == null) return head;
@@ -47,7 +49,7 @@ class Solution {
     }
 }
 
-
+//根据奇后是偶，偶后是奇的性质
 class Solution {
     public ListNode oddEvenList(ListNode head) {
         if (head == null || head.next == null) return head;
