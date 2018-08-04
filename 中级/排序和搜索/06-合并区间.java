@@ -79,3 +79,26 @@ class Solution {
 
     }
 }
+
+// 使用collection对区间按照start的大小排序，然后对每个区间进行判定
+class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        if (intervals == null || intervals.size() <= 1)
+            return intervals;
+        Collections.sort(intervals, (a, b) -> a.start - b.start); // 重写了Comparator里的compare方法http://how2j.cn/k/collection/collection-comparator-comparable/693.html#nowhere
+        int start = intervals.get(0).start;
+        int end = intervals.get(0).end;
+        List<Interval> res = new ArrayList<>();
+        for (Interval interval : intervals) {
+            if (interval.start <= end) {
+                end = Math.max(end, interval.end);
+            } else {
+                res.add(new Interval(start, end));
+                start = interval.start;
+                end = interval.end;
+            }
+        }
+        res.add(new Interval(start, end));
+        return res;
+    }
+}
