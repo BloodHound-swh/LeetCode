@@ -24,12 +24,15 @@ class Solution {
         lis[0] = 1;
         int max = 1;
         for (int i = 1; i < nums.length; i++) {
+            // 找到dp[0]到dp[i-1]中最大的升序序列长度且nums[j]<nums[i]
             for (int j = 0; j < i; j++) {
                 if (nums[j] < nums[i]) {
                     lis[i] = Math.max(lis[i], lis[j]);
                 }
             }
+            // 加1就是该位置能构成的最长升序序列长度
             lis[i] += 1;
+            // 更新全局长度
             max = Math.max(max, lis[i]);
         }
         return max;
