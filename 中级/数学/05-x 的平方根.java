@@ -19,7 +19,6 @@
  */
 
 
-
 // 使用二分法，看mid的平方与x的大小关系
 class Solution {
     public int mySqrt(int x) {
@@ -61,5 +60,20 @@ class Solution {
             add = add + 2;
         }
         return res - 1;
+    }
+}
+
+// 牛顿迭代法，直接使用数学公式
+public class Solution {
+    public int mySqrt(int x) {
+        if (x == 0)
+            return 0;
+        double y = Math.max(1, x / 2);
+        while (true) {
+            double ny = (((double) y * y + x) / 2 / y);
+            if (Math.abs(y - ny) <= 0.01)
+                return (int) ny;
+            y = ny;
+        }
     }
 }
