@@ -74,7 +74,7 @@ class Solution {
     }
 }
 
-// 把对应位的值变成负数，最后低i位不是负数，则缺失的正数就是i + 1
+// 把对应位的值变成负数，最后第i位不是负数，则缺失的正数就是i + 1
 // https://www.youtube.com/watch?v=8DqewGsVNkI
 class Solution {
     public int firstMissingPositive(int[] nums) {
