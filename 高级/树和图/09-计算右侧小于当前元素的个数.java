@@ -16,6 +16,7 @@
 // https://www.youtube.com/watch?v=WbafSgetDDk&t=908s   FenwickTree
 // 使用FenwickTree来记录比当前数字排名小的数字出现的次数
 // 方法是用树状数组第i位表示排名第i大的数字是否出现，出现就用1，没出现就用0，所以update得delta = 1
+// 时间复杂度O(nlogn)
 class Solution {
     public static int lowbit(int x) {
         return x & (-x);
@@ -119,7 +120,7 @@ class Solution {
     }
 }
 
-// 二分法
+// 二分法 时间复杂度O(n^2)
 class Solution {
     public List<Integer> countSmaller(int[] nums) {
         Integer[] res = new Integer[nums.length];
