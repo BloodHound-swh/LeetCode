@@ -137,7 +137,7 @@ class Solution {
         if (list.size() == 0) 
             return 0;
         int start = 0;
-        int end = list,size() - 1;
+        int end = list.size() - 1;
         if (list.get(end) < target) 
             return end + 1;
         if (list.get(start) >= target) 
