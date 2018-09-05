@@ -67,7 +67,9 @@ class Solution {
     }
 }
 
-// BST
+// BST 二叉树法
+// 每个节点有三个值，第一个是自己的val，第二个记录这个数出现了几次，第三个记录比这个数小的数字有多少个
+// 结合递归即可
 class Solution {
     class Node {
         int val;
