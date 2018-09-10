@@ -56,3 +56,21 @@ class Solution {
     }
 
 }
+
+// 动态规划。这是一道非常非常典型的动态规划问题。
+// 1. 首先如何定义问题？这个问题就是，f(i)=对于任意一个正整数i，求i由多少个整数平方和组成。
+// 2. 如何得到最终问题f(n)？方法就是从1开始计算，f(1)，f(2)，直到f(n)
+// 3. 每个f(i)如何计算？每个f(i)只和前面的f值有关！！！
+public class Solution {
+    public int numSquares(int n) {
+        int[] nums = new int[n + 1];
+        for (int i = 1; i <= n; i++)
+            nums[i] = i;
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j * j <= i; j++) {
+                nums[i] = Math.min(nums[i], nums[i - j * j] + 1);
+            }
+        }
+        return nums[n];
+    }
+}
