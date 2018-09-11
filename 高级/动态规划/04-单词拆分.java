@@ -99,7 +99,7 @@ class Solution {
     }
 }
 
-// 使用memorize dp 为其follow做准备
+// 使用memorize dp 
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
         if (s == null || wordDict == null) 
