@@ -69,8 +69,8 @@ class Solution {
                 if (partRes == null) { // 当前词本身全部都在字典里了
                     res.add(sub);
                 } else {
-                    for (String str : partRes) {
-                        res.add(sub + " " + str);
+                    for (String str : partRes) { // 注意这里实际上每次partRes就只有一个Str
+                        res.add(sub + " " + str); // sub + str 形成新的一个str
                     }
                 }
             }
