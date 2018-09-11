@@ -98,3 +98,37 @@ class Solution {
         return dp[s.length()];
     }
 }
+
+// 使用memorize dp 为其follow做准备
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        if (s == null || wordDict == null) 
+            return false;
+        HashSet<String> dict = new HashSet<>(wordDict);
+        HashMap<String, Boolean> mem = new HashMap<>();
+        
+        return wordBreak(s, mem, dict);
+    }
+    
+    public boolean wordBreak(String s, HashMap<String, Boolean> mem, HashSet<String> dict) {
+        // s 出现在了memorize中
+        if (mem.containsKey(s)) 
+            return mem.get(s);
+        // 整个字符串都早字典中，或者说是将s分割为""与s
+        if (dict.contains(s)) {
+            mem.put(s, true);
+            return true;
+        }
+        
+        // 将字符串分割成左右两部分，先看右边是否在字典中，然后看左边是否breakable
+        for (int i = 1; i <= s.length(); i++) {
+            if (dict.contains(s.substring(i)) && wordBreak(s.substring(0, i), mem, dict)) {
+                mem.put(s, true);
+                return true;
+            }
+        }
+        
+        mem.put(s, false);
+        return false;
+    }
+}
