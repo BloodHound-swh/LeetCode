@@ -17,7 +17,7 @@ class Solution {
     public List<String> helper(String s, HashSet<String> set, HashMap<String, List<String>> used) {
         if (used.containsKey(s))
             return used.get(s);
-        if (s.length() == 0)
+        if (s.length() == 0) // 到达边界，相当于出口函数
             return null;
 
         List<String> res = new LinkedList<>();
@@ -27,7 +27,7 @@ class Solution {
             List<String> partRes = null;
             if (set.contains(sub)) {
                 partRes = helper(s.substring(i), set, used);
-                if (partRes == null) {
+                if (partRes == null) { // 当前词本身全部都在字典里了
                     res.add(sub);
                 } else {
                     for (String str : partRes) {
