@@ -37,7 +37,6 @@
 ]
  */
 
-
 //直观上看，就是四个数字循环交换，从外圈一步步到内圈
 class Solution {
     public void rotate(int[][] matrix) {
@@ -46,42 +45,42 @@ class Solution {
         }
         int top = 0;
         int left = 0;
-        int right = matrix.length-1;
-        int bottom = matrix.length -1;
+        int right = matrix.length - 1;
+        int bottom = matrix.length - 1;
         int n = matrix.length;
-        while(n>1){
-            for(int i = 0; i< n-1;i++){
-                int temp = matrix[top][left+i];
-                matrix[top][left+i] = matrix[bottom-i][left];
-                matrix[bottom-i][left] = matrix[bottom][right-i];
-                matrix[bottom][right-i] = matrix[top+i][right];
-                matrix[top+i][right] = temp;
+        while (n > 1) {
+            for (int i = 0; i < n - 1; i++) {
+                int temp = matrix[top][left + i];
+                matrix[top][left + i] = matrix[bottom - i][left];
+                matrix[bottom - i][left] = matrix[bottom][right - i];
+                matrix[bottom][right - i] = matrix[top + i][right];
+                matrix[top + i][right] = temp;
             }
             top++;
             bottom--;
             left++;
             right--;
-            n-=2;
+            n -= 2;
         }
     }
 }
 
-//其实旋转可以看成是两次翻转，一次沿着左（其实右也可以）对角线翻转，第二次沿着中线翻转
+// 其实旋转可以看成是两次翻转，一次沿着左（其实右也可以）对角线翻转，第二次沿着中线翻转
 class Solution {
-	public void rotate(int[][] matrix) {
-        for(int i=0;i<matrix.length;i++){
-            for(int j=i;j<matrix.length;j++){
+    public void rotate(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = i; j < matrix.length; j++) {
                 int temp = matrix[i][j];
                 matrix[i][j] = matrix[j][i];
                 matrix[j][i] = temp;
             }
         }
-        for(int i=0;i<matrix.length;i++){
-            for(int j=0;j<matrix.length / 2;j++){
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length / 2; j++) {
                 int temp = matrix[i][j];
-                matrix[i][j] = matrix[i][matrix.length-1-j];
-                matrix[i][matrix.length-1-j] = temp;
+                matrix[i][j] = matrix[i][matrix.length - 1 - j];
+                matrix[i][matrix.length - 1 - j] = temp;
             }
         }
-	}
+    }
 }
