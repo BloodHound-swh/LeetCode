@@ -1,16 +1,49 @@
-/*
-有效的字母异位词给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的一个字母异位词。
-例如，
-s = "anagram"，t = "nagaram"，返回 true
-s = "rat"，t = "car"，返回 false
-注意:
-假定字符串只包含小写字母。
-提升难度:
-输入的字符串包含 unicode 字符怎么办？你能能否调整你的解法来适应这种情况？
+/**
+ * 有效的字母异位词
 
+给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的一个字母异位词。
+
+示例 1:
+
+输入: s = "anagram", t = "nagaram"
+输出: true
+示例 2:
+
+输入: s = "rat", t = "car"
+输出: false
+说明:
+你可以假设字符串只包含小写字母。
+
+进阶:
+如果输入字符串包含 unicode 字符怎么办？你能否调整你的解法来应对这种情况？
  */
 
-//是用两个Map，并用equals来判定
+// 未看答案版，运算时间排倒数。。。
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        HashMap<Character, Integer> mapS = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (mapS.containsKey(s.charAt(i))) {
+                mapS.put(s.charAt(i), mapS.get(s.charAt(i)) + 1);
+            } else {
+                mapS.put(s.charAt(i), 1);
+            }
+        }
+
+        HashMap<Character, Integer> mapT = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            if (mapT.containsKey(t.charAt(i))) {
+                mapT.put(t.charAt(i), mapT.get(t.charAt(i)) + 1);
+            } else {
+                mapT.put(t.charAt(i), 1);
+            }
+        }
+
+        return mapS.equals(mapT);
+    }
+}
+
+// 是用两个Map，并用equals来判定
 class Solution {
     public boolean isAnagram(String s, String t) {
         Map<Character, Integer> maps = new HashMap<Character, Integer>();
