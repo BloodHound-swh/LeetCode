@@ -1,4 +1,4 @@
-/**
+/*
 验证回文字符串
 给定一个字符串，确定它是否是回文，只考虑字母数字字符和忽略大小写。
 例如：
@@ -12,50 +12,50 @@
 //使用前后指针
 class Solution {
     public boolean isPalindrome(String s) {
-        if(s==null||s.length()==0)
+        if (s == null || s.length() == 0)
             return true;
         int front = 0;
-        int end = s.length()-1;
-        while(front<end){
-            while(front<s.length()&&!isValid(s.charAt(front))){
+        int end = s.length() - 1;
+        while (front < end) {
+            while (front < s.length() && !isValid(s.charAt(front))) {
                 front++;
             }
-            if(front==s.length())
+            if (front == s.length())
                 return true;
-            while(end>=0&&!isValid(s.charAt(end))){
+            while (end >= 0 && !isValid(s.charAt(end))) {
                 end--;
             }
-            if(Character.toLowerCase(s.charAt(front))!=Character.toLowerCase(s.charAt(end)))
+            if (Character.toLowerCase(s.charAt(front)) != Character.toLowerCase(s.charAt(end)))
                 return false;
-            else{
+            else {
                 front++;
                 end--;
             }
         }
         return true;
-        
+
     }
-    
-    public boolean isValid(char c){
-        return Character.isLetter(c)||Character.isDigit(c);
+
+    public boolean isValid(char c) {
+        return Character.isLetter(c) || Character.isDigit(c);
     }
 }
 
-//简化判定方法，并使用单指针（实际上依然是双指针，是指表达方式改变了，更加高效）
+// 简化判定方法，并使用单指针（实际上依然是双指针，是指表达方式改变了，更加高效）
 class Solution {
     public boolean isPalindrome(String s) {
         char[] charArr = s.toCharArray();
         char[] filterArr = new char[charArr.length];
         int filterCount = 0;
-        for (int i=0; i<charArr.length; i++) {
+        for (int i = 0; i < charArr.length; i++) {
             if ((charArr[i] >= '0' && charArr[i] <= '9') || (charArr[i] >= 'a' && charArr[i] <= 'z')) {
                 filterArr[filterCount++] = charArr[i];
             } else if (charArr[i] >= 'A' && charArr[i] <= 'Z') {
-                filterArr[filterCount++] = (char)(charArr[i]+32);
+                filterArr[filterCount++] = (char) (charArr[i] + 32);
             }
         }
-        for (int i=0; i<filterCount/2; i++) {
-            if (filterArr[i] != filterArr[filterCount-1-i]) {
+        for (int i = 0; i < filterCount / 2; i++) {
+            if (filterArr[i] != filterArr[filterCount - 1 - i]) {
                 return false;
             }
         }
