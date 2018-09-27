@@ -1,4 +1,4 @@
-/**
+/*
  * 字符串转整数 (atoi)
 
 实现 atoi，将字符串转为整数。
@@ -115,14 +115,17 @@ class Solution {
 // step2.判断±号；
 // step3.依次遍历，如果为0~9，则base*10加上该数字，将得到的值赋给base。若base大于214746364，或等于214746364并且该数字大于7，说明int溢出，返回2147463647或2147463648；
 // step4.返回base*sign。
-
 public class Solution {
     public int myAtoi(String str) {
         if (str.isEmpty())
             return 0;
         int sign = 1, base = 0, i = 0, n = str.length();
-        while (i < n && str.charAt(i) == ' ')
-            ++i;
+        while (i < n && str.charAt(i) == ' ') {
+            i++;
+            if (i == n) {
+                return 0;
+            }
+        }
         if (str.charAt(i) == '+' || str.charAt(i) == '-') {
             sign = (str.charAt(i++) == '+') ? 1 : -1;
         }
