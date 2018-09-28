@@ -46,6 +46,25 @@ class Solution {
     }
 }
 
+// 将上面的做法做点修改就能通过了
+public class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0)
+            return "";
+        String res = new String();
+        for (int j = 0; j < strs[0].length(); ++j) {
+            char c = strs[0].charAt(j);
+            for (int i = 1; i < strs.length; ++i) {
+                if (j >= strs[i].length() || strs[i].charAt(j) != c) { // 这样就能防止越界的问题
+                    return res;
+                }
+            }
+            res += Character.toString(c);
+        }
+        return res;
+    }
+}
+
 // 答案一
 // 取字符串数组的第一个元素作为初始prefix，然后用j来表示之后每个元素与第一个元素重复的位数。每次循环，j置零进行比较。
 // 而prefix每次都截取0到j的长度，保证prefix为公用的部分。
@@ -76,7 +95,7 @@ class Solution {
     public String longestCommonPrefix(String[] strs) {
         if (null == strs || strs.length < 1) {
             return "";
-        } 
+        }
         String res = strs[0];
         for (int i = 1; i < strs.length; i++) {
             while (strs[i].indexOf(res) != 0) {
