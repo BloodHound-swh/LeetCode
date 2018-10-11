@@ -1,4 +1,4 @@
-/**
+/*
 二叉树的最大深度
 给定一个二叉树，找出其最大深度。
 
@@ -17,8 +17,7 @@
 返回它的最大深度 3 。
  */
 
-
-/**
+/*
  * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
@@ -28,19 +27,17 @@
  * }
  */
 
- //递归思想——找到每一层所重复处理的方法，再找到边界条件，就可以确定递归。
-
-
+//递归思想——找到每一层所重复处理的方法，再找到边界条件，就可以确定递归。
 //树的最大深度等于左子树和右子树最大深度的最大值加1，以此递归即可，注意边界条件。
 class Solution {
     public int maxDepth(TreeNode root) {
-        if(root == null)
+        if (root == null)
             return 0;
         return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
     }
 }
 
-//常用写法
+// 常用写法
 public class Solution {
     /**
      * @param root: The root of binary tree.
@@ -50,10 +47,10 @@ public class Solution {
         if (root == null) {
             return 0;
         }
-        
+
         int left = maxDepth(root.left);
         int right = maxDepth(root.right);
-        
+
         return Math.max(left, right) + 1;
     }
 }
