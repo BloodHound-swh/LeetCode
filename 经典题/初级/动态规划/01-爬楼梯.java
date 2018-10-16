@@ -1,4 +1,4 @@
-/**
+/*
  爬楼梯
 假设你正在爬楼梯。需要 n 步你才能到达楼顶。
 
@@ -23,18 +23,17 @@
 3.  2 步 + 1 步 
  */
 
-
-//每一层的楼梯走法等于上一层的走法再走一步加上两层的走法再走两步，所以用递归的方法，至于前两个状态有关。
-//使用pre和current可以减少空间复杂度。
+// 每一层的楼梯走法等于上一层的走法再走一步加上两层的走法再走两步，所以用递归的方法，至于前两个状态有关。
+// 使用pre和current可以减少空间复杂度。
 class Solution {
     public int climbStairs(int n) {
-        if(n == 1)
+        if (n == 1)
             return 1;
-        if(n == 2)
+        if (n == 2)
             return 2;
         int pre = 1;
         int current = 2;
-        for(int i=3; i<=n; i++){
+        for (int i = 3; i <= n; i++) {
             current = pre + current;
             pre = current - pre;
         }
@@ -42,8 +41,7 @@ class Solution {
     }
 }
 
-
-//使用数组，但是空间复杂度高
+// 使用数组，但是空间复杂度高
 class Solution {
     public int climbStairs(int n) {
         if (n <= 1) {
@@ -55,16 +53,16 @@ class Solution {
         for (int i = 2; i <= n; i++) {
             dp[i] = dp[i - 1] + dp[i - 2];
         }
-        
         return dp[n];
     }
 }
 
-
-//超时
-public int climbStairs1(int n) {  
-    if (n == 1 || n == 2) {  
-        return n;  
-    }  
-    return climbStairs1(n-1) + climbStairs1(n-2);  
-}  
+// 超时
+class Solution {
+    public int climbStairs1(int n) {
+        if (n == 1 || n == 2) {
+            return n;
+        }
+        return climbStairs1(n - 1) + climbStairs1(n - 2);
+    }
+}
