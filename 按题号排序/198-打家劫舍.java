@@ -1,5 +1,6 @@
-/*
+/**
  * 打家劫舍
+
 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
 
 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。
@@ -18,37 +19,29 @@
      偷窃到的最高金额 = 2 + 9 + 1 = 12 。
  */
 
-//三个算法都是考虑打劫到第i-1家时的最大收益与打劫到第i-2家的最大收益,加上打劫第i家获得的金钱(nums[i])
+// 未看答案版，没有找到打劫与不打劫的转移关系。
+// 其实只要认定每个房间只有两种状态，打劫，不打劫，而到下一个房间为止的总收入只与到上一个房间为止的总收入有关
+
+// 答案一
+// 每个房间只有两种状态，打劫，不打劫，而到下一个房间为止的总收入只与到上一个房间为止的总收入有关
 class Solution {
     public int rob(int[] nums) {
-        if (nums == null || nums.length == 0)
+        if (nums == null || nums.length == 0) {
             return 0;
+        }
         int rob = 0;
-        int notrob = 0;
+        int notRob = 0;
         for (int num : nums) {
-            int pre = Math.max(rob, notrob);
-            rob = notrob + num;
-            notrob = pre;// 当前不打劫，那么之前的房子可以打劫也可以不打劫，取最大利益
+            int pre = Math.max(rob, notRob);
+            rob = notRob + num;
+            notRob = pre;  //当前不打劫，那么之前的房子可以打劫也可以不打劫，取最大利益
         }
-        return Math.max(rob, notrob);
+        return Math.max(rob, notRob);
     }
 }
 
-class Solution {
-    public int rob(int[] nums) {
-        if (nums == null || nums.length == 0)
-            return 0;
-        int steal = nums[0], notSteal = 0;
-        for (int i = 1; i < nums.length; i++) {
-            int tmpS = steal;
-            steal = nums[i] + notSteal;
-            notSteal = Math.max(tmpS, notSteal);
-        }
-        return Math.max(steal, notSteal);
-    }
-}
-
-// 这样写容易理解，但是空间复杂度高
+// 打劫到第i家的最大收益需要比较打劫到第i-1家时的最大收益与打劫到第i-2家的最大收益加上打劫第i家获得的金钱(nums[i])
+// 这样写容易理解，但是空间复杂度高，注意res[0]预先定为0，所以其实是相当于右移了一位
 class Solution {
     public int rob(int[] nums) {
         int n = nums.length;
