@@ -19,6 +19,10 @@ solution.reset();
 solution.shuffle();
  */
 
+ 
+// 未看答案没有做出。。。其实就是个交换思想而已
+
+
 // 任意一种排列组合出现的几率相同那么肯定会用到random。random地对数字顺序进行交换即可
 // 需要注意的是有一种做法是，应该用i + rand() % (a.length - i)而不是rand() % a.length
 // 虽然也能通过OJ，但是根据概率图表，rand() % a.length的写法不是真正的随机分布
