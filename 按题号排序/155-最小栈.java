@@ -1,5 +1,6 @@
-/*
+/**
  * 最小栈
+
 设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。
 
 push(x) -- 将元素 x 推入栈中。
@@ -18,13 +19,15 @@ minStack.top();      --> 返回 0.
 minStack.getMin();   --> 返回 -2.
  */
 
-//使用两个栈，一个最小栈，一个顺序栈
-class MinStack {
 
-    /** initialize your data structure here. */
+// 未看答案没有做出，如何取得最小值是关键点
+
+// 答案一
+class MinStack {
     private Stack<Integer> Stack;
     private Stack<Integer> minStack;
 
+    /** initialize your data structure here. */
     public MinStack() {
         Stack = new Stack<>();
         minStack = new Stack<>();
@@ -41,7 +44,7 @@ class MinStack {
     }
 
     public void pop() {
-        if (Stack.peek().equals(minStack.peek()))
+        if (Stack.peek().equals(minStack.peek())) // 注意这里不能用==，在答案二有解释
             minStack.pop();
         Stack.pop();
     }
@@ -55,6 +58,7 @@ class MinStack {
     }
 }
 
+// 答案二
 // 代码优化，注意注释。对于peek()函数的返回值并不是int类型，而是一个Object类型，这是一个基本的对象类型，如果我们直接用==来比较的话，那么肯定不会返回true
 // 因为是两个不同的对象，所以我们一定要先将一个转为int型，然后再和另一个进行比较，这样才能得到我们想要的答案
 class MinStack {
@@ -88,33 +92,3 @@ class MinStack {
         return s2.peek();
     }
 }
-
-// 粗糙版
-public class MinStack {
-    private Stack<Integer> stack;
-    private Stack<Integer> minStack;
-
-    public MinStack() {
-        stack = new Stack<Integer>();
-        minStack = new Stack<Integer>();
-    }
-
-    public void push(int number) {
-        stack.push(number);
-        if (minStack.isEmpty()) {
-            minStack.push(number);
-        } else {
-            minStack.push(Math.min(number, minStack.peek()));// 不停的push，也不停的pop
-        }
-    }
-
-    public int pop() {
-        minStack.pop();
-        return stack.pop();
-    }
-
-    public int min() {
-        return minStack.peek();
-    }
-}
-
