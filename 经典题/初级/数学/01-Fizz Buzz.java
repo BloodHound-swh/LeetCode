@@ -1,4 +1,4 @@
-/**
+/*
 Fizz Buzz
 Write a program that outputs the string representation of numbers from 1 to n.
 
@@ -33,20 +33,19 @@ Return:
 如果这个数能同时被3和5整除，打印fizz buzz.
  */
 
-
-//就是简单的条件判定，注意i+""是将i转变成字符串，也可以用String.valueOf(i)
+// 就是简单的条件判定，注意i+""是将i转变成字符串，也可以用String.valueOf(i)
 class Solution {
     public List<String> fizzBuzz(int n) {
         List<String> res = new ArrayList<String>();
-        for(int i = 1; i <= n; i++){
-            if(i % 3 ==0 && i % 5 == 0){
+        for (int i = 1; i <= n; i++) {
+            if (i % 3 == 0 && i % 5 == 0) {
                 res.add("FizzBuzz");
-            } else if(i % 3 == 0){
+            } else if (i % 3 == 0) {
                 res.add("Fizz");
-            } else if(i % 5 == 0){
+            } else if (i % 5 == 0) {
                 res.add("Buzz");
-            } else{
-                res.add(i+"");
+            } else {
+                res.add(i + "");
             }
         }
         return res;
