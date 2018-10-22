@@ -1,6 +1,7 @@
-/*
-罗马数字转整数
-罗马数字包含以下七种字符：I， V， X， L，C，D 和 M。
+/**
+ * 罗马数字转整数
+
+罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
 
 字符          数值
 I             1
@@ -35,7 +36,7 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 
 输入: "LVIII"
 输出: 58
-解释: C = 100, L = 50, XXX = 30, III = 3.
+解释: L = 50, V= 5, III = 3.
 示例 5:
 
 输入: "MCMXCIV"
@@ -43,6 +44,44 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 解释: M = 1000, CM = 900, XC = 90, IV = 4.
  */
 
+// 未看答案版
+class Solution {
+    public int romanToInt(String s) {
+        char[] c = s.toCharArray();
+        int n = 0;
+        for (char ch : c) {
+            if (ch == 'I')
+                n += 1;
+            else if (ch == 'V')
+                n += 5;
+            else if (ch == 'X')
+                n += 10;
+            else if (ch == 'L')
+                n += 50;
+            else if (ch == 'C')
+                n += 100;
+            else if (ch == 'D')
+                n += 500;
+            else if (ch == 'M')
+                n += 1000;
+        }
+        if (s.indexOf("IV") != -1)
+            n -= 2;
+        if (s.indexOf("IX") != -1)
+            n -= 2;
+        if (s.indexOf("XL") != -1)
+            n -= 20;
+        if (s.indexOf("XC") != -1)
+            n -= 20;
+        if (s.indexOf("CD") != -1)
+            n -= 200;
+        if (s.indexOf("CM") != -1)
+            n -= 200;
+        return n;
+    }
+}
+
+// 答案一
 // 规律 如果左边的数字小于右边的数字 = 右 - 左
 // 将所有数相加，并减去特殊组合造成的多余部分
 class Solution {
@@ -50,7 +89,7 @@ class Solution {
         if (s == null || s.length() == 0)
             return 0;
         int result = 0;
-        if (s.indexOf("CM") != -1)
+        if (s.indexOf("CM") != -1)  // 注意s.indexOf的用法
             result -= 200;
         if (s.indexOf("CD") != -1)
             result -= 200;
@@ -63,7 +102,7 @@ class Solution {
         if (s.indexOf("IV") != -1)
             result -= 2;
 
-        for (char c : s.toCharArray()) {
+        for (char c : s.toCharArray()) {  // 注意可以在括号里面转数组
             if (c == 'M')
                 result += 1000;
             else if (c == 'D')
@@ -84,39 +123,33 @@ class Solution {
     }
 }
 
+// 答案二
+// 当前位置表示的数字大于上一位的时候，就说明需要减去两倍上一位的数了
 // 将右 - 左 详细的表示出来
 class Solution {
     public int romanToInt(String s) {
-        if (s == null || s.length() == 0)
+        if(s == null || s.length() == 0)
             return 0;
         int res = toNumber(s.charAt(0));
-        for (int i = 1; i < s.length(); i++) {
-            if (toNumber(s.charAt(i)) > toNumber(s.charAt(i - 1))) {
-                res += toNumber(s.charAt(i)) - 2 * toNumber(s.charAt(i - 1));
+        for(int i = 1; i < s.length(); i++){
+            if(toNumber(s.charAt(i)) > toNumber(s.charAt(i - 1))){
+                res += toNumber(s.charAt(i)) - 2 * toNumber(s.charAt(i-1));
             } else {
                 res += toNumber(s.charAt(i));
             }
         }
         return res;
     }
-
-    public static int toNumber(char c) {
+    public static int toNumber(char c){
         int res = 0;
-        switch (c) {
-        case 'I':
-            return 1;
-        case 'V':
-            return 5;
-        case 'X':
-            return 10;
-        case 'L':
-            return 50;
-        case 'C':
-            return 100;
-        case 'D':
-            return 500;
-        case 'M':
-            return 1000;
+        switch(c){
+            case 'I' : return 1;
+            case 'V' : return 5;
+            case 'X' : return 10;
+            case 'L' : return 50;
+            case 'C' : return 100;
+            case 'D' : return 500;
+            case 'M' : return 1000;
         }
         return res;
     }
