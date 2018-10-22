@@ -1,21 +1,19 @@
-/*
-位1的个数
-编写一个函数，输入是一个无符号整数，返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为汉明重量）。
+// 未看答案版
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int res = 0;
+        while (n != 0) {
+            res += n & 1;
+            n = n >>> 1;
+        }
+        return res;
+    }
+}
 
-示例 :
+// 以下答案个人感觉都没有上面的答案好
 
-输入: 11
-输出: 3
-解释: 整数 11 的二进制表示为 00000000000000000000000000001011
- 
-
-示例 2:
-
-输入: 128
-输出: 1
-解释: 整数 128 的二进制表示为 00000000000000000000000010000000
- */
-
+// 答案一
 // 常规思路，逐位与1相与，计数。
 public class Solution {
     // you need to treat n as an unsigned value
@@ -29,6 +27,7 @@ public class Solution {
     }
 }
 
+// 答案二
 // 使用n & n-1 ,重复操作，有多少个1，这个操作就可以执行多少次。
 public class Solution {
     // you need to treat n as an unsigned value
@@ -42,7 +41,7 @@ public class Solution {
     }
 }
 
-// 方法二的另一种写法
+// 答案二的另一种写法
 public class Solution {
     // you need to treat n as an unsigned value
     public int hammingWeight(int n) {
