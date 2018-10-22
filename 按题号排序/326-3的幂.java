@@ -23,20 +23,36 @@
 你能不使用循环或者递归来完成本题吗？
  */
 
+// 未看答案有错误，int问题
+class Solution {
+    public boolean isPowerOfThree(int n) {
+        if (n > 0 && n < 3)
+            return false;
+        while (n > 0) {
+            n = n / 3;
+            if (n == 1)
+                return true;
+        }
+        return false;
+    }
+}
+
+// 答案一
 // 最简单的循环判断
 class Solution {
     public boolean isPowerOfThree(int n) {
         int i = 0;
-        while (true) {
-            if (Math.pow(3, i) == n)
+        while(true){
+            if(Math.pow(3, i) == n)
                 return true;
-            if (Math.pow(3, i) > n)
+            if(Math.pow(3, i) > n)
                 return false;
             i++;
         }
     }
 }
 
+// 答案二，这个方法应该最快
 // 考虑到int的范围，且3^19等于1162261467 int范围-2147483648~2147483648
 class Solution {
     public boolean isPowerOfThree(int n) {
@@ -48,6 +64,7 @@ class Solution {
     }
 }
 
+// 答案三
 // 对数的方法：一个数是3的次方，那么以3为底n的对数一定是个 整数。
 class Solution {
     public boolean isPowerOfThree(int n) {
