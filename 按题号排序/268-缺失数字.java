@@ -1,5 +1,6 @@
-/*
-缺失数字
+/**
+ * 缺失数字
+
 给定一个包含 0, 1, 2, ..., n 中 n 个数的序列，找出 0 .. n 中没有出现在序列中的那个数。
 
 示例 1:
@@ -14,6 +15,23 @@
 你的算法应具有线性时间复杂度。你能否仅使用额外常数空间来实现?
  */
 
+
+// 未看答案版，但是空间复杂度不是常数
+class Solution {
+    public int missingNumber(int[] nums) {
+        boolean[] n = new boolean[nums.length + 1];
+        for (int num : nums) {
+            n[num] = true;
+        }
+        for (int i = 0; i < n.length; i++) {
+            if (n[i] == false)
+                return i;
+        }
+        return -1;
+    }
+}
+
+// 答案一
 // 求和法，那么计算出【0...n】的数组的和，再减去待计算数组的和，那么缺少的数就出来了。
 class Solution {
     public int missingNumber(int[] nums) {
@@ -39,6 +57,7 @@ class Solution {
     }
 }
 
+// 答案二，使用异或
 // 假设[0,1,3]
 // 使用连续异或找到缺失数字
 class Solution {
