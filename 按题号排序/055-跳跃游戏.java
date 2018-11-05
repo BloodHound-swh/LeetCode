@@ -1,4 +1,4 @@
-/*
+/**
  * 跳跃游戏
 给定一个非负整数数组，你最初位于数组的第一个位置。
 
@@ -17,6 +17,10 @@
 输出: false
 解释: 无论怎样，你总会到达索引为 3 的位置。但该位置的最大跳跃长度是 0 ， 所以你永远不可能到达最后一个位置。
  */
+
+// 未看答案没有做出
+
+// 答案一
 // 使用max_reach来记录当前所能到达的最远处，当max_reach大于nums.length-1时，返回true（贪心算法）
 class Solution {
     public boolean canJump(int[] nums) {
@@ -48,6 +52,7 @@ class Solution {
     }
 }
 
+// 答案二
 // 使用数组dp[] 来表示走到i位置时的剩余“跳力”，当跳力小于零时，表示其实根本无法到达i位置
 class Solution {
     public boolean canJump(int[] nums) {
