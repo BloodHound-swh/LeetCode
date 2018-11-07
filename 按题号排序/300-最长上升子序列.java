@@ -1,5 +1,6 @@
-/*
- * Longest Increasing Subsequence
+/**
+ * 最长上升子序列
+
 给定一个无序的整数数组，找到其中最长上升子序列的长度。
 
 示例:
@@ -12,7 +13,34 @@
 可能会有多种最长上升子序列的组合，你只需要输出对应的长度即可。
 你算法的时间复杂度应该为 O(n2) 。
 进阶: 你能将算法的时间复杂度降低到 O(n log n) 吗?
+
+
  */
+
+// 未看答案没有做出
+
+// 动态规划Dynamic Programming的解法，这种解法的时间复杂度为O(n2)，类似brute force的解法
+// 我们维护一个一维dp数组，其中dp[i]表示以nums[i]为结尾的最长递增子串的长度
+// 对于每一个nums[i]，我们从第一个数再搜索到i，如果发现某个数小于nums[i]，我们更新dp[i]，更新方法为dp[i] = max(dp[i], dp[j] + 1)
+// 即比较当前dp[i]的值和那个小于num[i]的数的dp值加1的大小，我们就这样不断的更新dp数组，到最后dp数组中最大的值就是我们要返回的LIS的长度
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        if (nums.length == 0)
+            return 0;
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+}
 
 // 构建最长升序序列长度的数组,找到dp[0]到dp[i-1]中最大的升序序列长度且nums[j]<nums[i]
 class Solution {
@@ -30,7 +58,7 @@ class Solution {
                 }
             }
             // 加1就是该位置能构成的最长升序序列长度
-            lis[i] += 1;
+            lis[i] += 1; // 相当于上面的Arrays.fill(lis, 1)
             // 更新全局长度
             max = Math.max(max, lis[i]);
         }
@@ -38,6 +66,7 @@ class Solution {
     }
 }
 
+// 答案二
 // https://segmentfault.com/a/1190000003819886
 // 在1,3,5,2,8,4,6这个例子中，当到6时，我们一共可以有四种
 // (1)不同长度
