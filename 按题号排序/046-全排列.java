@@ -1,5 +1,6 @@
-/*
+/**
  * 全排列
+
 给定一个没有重复数字的序列，返回其所有可能的全排列。
 
 示例:
@@ -15,6 +16,38 @@
   [3,2,1]
 ]
  */
+
+// 未看答案没有做出，没想到DFS的中需要删去最后一个数字
+
+
+// 答案一
+// 用递归DFS来求解。这里我们需要用到一个visited数组来标记某个数字是否访问过.
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        HashSet<Integer> visited = new HashSet<>();
+        dfs(res, list, nums, visited);
+        return res;
+    }
+
+    public void dfs(List<List<Integer>> res, List<Integer> list, int[] nums, HashSet<Integer> visited) {
+        if (list.size() == nums.length) {
+            res.add(new ArrayList<Integer>(list));
+        } else {
+            for (int i = 0; i < nums.length; i++) {
+                if (!visited.contains(nums[i])) {
+                    list.add(nums[i]);
+                    int last = list.size() - 1;
+                    visited.add(nums[i]);
+                    dfs(res, list, nums, visited);
+                    visited.remove(nums[i]);
+                    list.remove(last);
+                }
+            }
+        }
+    }
+}
 
 // 使用clist和Hashset，clist存储当前状态，set用来判断数字是否已经出现。每次递归返回后，去除clist最后一位，向上返回，选取下一个数字
 class Solution {
@@ -73,9 +106,8 @@ class Solution {
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        if (nums == null || nums.length == 0)
-            return res;
-        helper(res.new ArrayList<>(), nums);
+        if (nums == null || nums.length ==0) return res;
+        helper(res. new ArrayList<>(), nums);
         return res;
     }
 
@@ -85,8 +117,7 @@ class Solution {
             return;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (list.contains(nums[i]))
-                continue;
+            if (list.contains(nums[i])) continue;
             list.add(nums[i]);
             helper(res, list, nums);
             list.remove(list.size() - 1);
@@ -94,6 +125,7 @@ class Solution {
     }
 }
 
+// 答案二
 // 每次将当前位置的数字与它后面的每一个数字交换
 public class Solution {
 
