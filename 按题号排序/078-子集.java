@@ -1,5 +1,6 @@
-/*
+/**
  * 子集
+
 给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
 
 说明：解集不能包含重复的子集。
@@ -20,6 +21,9 @@
 ]
  */
 
+// 未看答案没有做出，其实这是DFS的变形题
+
+// 答案一
 // 使用递归（深度优先），每次在curr加入nums[currIdx]，循环调用helper函数，调用结束后，去除最后一个数字，然后currIdx++
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
@@ -36,6 +40,27 @@ class Solution {
             curr.add(nums[idx]);
             subsetsHelper(nums, idx + 1, result, curr);
             curr.remove(curr.size() - 1);
+        }
+    }
+}
+
+// DFS
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new LinkedList<>();
+        if (nums == null || nums.length == 0)
+            return res;
+        LinkedList<Integer> cur = new LinkedList<Integer>();
+        subsetsHelper(res, cur, 0, nums);
+        return res;
+    }
+
+    public void subsetsHelper(List<List<Integer>> res, LinkedList<Integer> cur, int idx, int[] nums) {
+        res.add(new LinkedList<Integer>(cur));
+        for (int i = idx; i < nums.length; i++) {
+            cur.add(nums[i]);
+            subsetsHelper(res, cur, i + 1, nums);
+            cur.remove(cur.size() - 1);
         }
     }
 }
@@ -59,5 +84,24 @@ class Solution {
             subsetsHelper(nums, currIdx + 1, result, curr);
             curr.remove(curr.size() - 1);
         }
+    }
+}
+
+// 答案二
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new LinkedList<>();
+        res.add(new LinkedList<>());
+        for (int i = 0; i < nums.length; i++) {
+            int size = res.size();
+            for (int j = 0; j < size; j++) {
+                // List<Integer> tmp = res.get(j); // 注意不能这样写，因为这时修改tmp就修改了res.get(j)
+                List<Integer> tmp = new LinkedList<>();
+                tmp.addAll(res.get(j));
+                tmp.add(nums[i]);
+                res.add(new LinkedList<Integer>(tmp));
+            }
+        }
+        return res;
     }
 }
