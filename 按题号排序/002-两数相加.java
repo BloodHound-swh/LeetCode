@@ -1,5 +1,6 @@
-/*
-两数相加
+/**
+ * 两数相加
+
 给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。
 
 你可以假设除了数字 0 之外，这两个数字都不会以零开头。
@@ -11,17 +12,54 @@
 原因：342 + 465 = 807
  */
 
-/*
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
+// 未看答案版
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode p = new ListNode(0);
+        ListNode dummy = p;
+        int carry = 0;
+        while (l1 != null && l2 != null) {
+            int tmp = l1.val + l2.val + carry;
+            carry = tmp / 10;
+            tmp = tmp % 10;
+            ListNode node = new ListNode(tmp);
+            p.next = node;
+            p = p.next;
+            l1 = l1.next;
+            l2 = l2.next;
+        }
 
-//分三块，第一：位数重复部分   第二：某一list多出的部分    第三：需要新建新的最高位
-//使用carry = sum / 10表示进位，sum % 10表示本位留下的数字
+        while (l1 != null) {
+            int tmp = l1.val + carry;
+            carry = tmp / 10;
+            tmp = tmp % 10;
+            ListNode node = new ListNode(tmp);
+            p.next = node;
+            p = p.next;
+            l1 = l1.next;
+        }
+
+        while (l2 != null) {
+            int tmp = l2.val + carry;
+            carry = tmp / 10;
+            tmp = tmp % 10;
+            ListNode node = new ListNode(tmp);
+            p.next = node;
+            p = p.next;
+            l2 = l2.next;
+        }
+        if (carry == 1) {
+            ListNode node = new ListNode(1);
+            p.next = node;
+        }
+
+        return dummy.next;
+    }
+}
+
+// 答案一
+// 分三块，第一：位数重复部分 第二：某一list多出的部分 第三：需要新建新的最高位
+// 使用carry = sum / 10表示进位，sum % 10表示本位留下的数字
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         if (l1 == null)
@@ -96,7 +134,7 @@ class Solution {
     }
 }
 
-// 使用表达式也很简洁，但是时间反而增加了，也许是判定时间更长
+// 使用表达式也很简洁
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode dummy = new ListNode(-1);
