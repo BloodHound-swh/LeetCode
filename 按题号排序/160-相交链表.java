@@ -24,19 +24,55 @@ B:     b1 → b2 → b3
 程序尽量满足 O(n) 时间复杂度，且仅用 O(1) 内存。
  */
 
-/*
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
+// 未看答案版，很不简洁
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode p1 = headA;
+        ListNode p2 = headB;
+        int k = 0;
+        while (p1 != null && p2 != null) {
+            if (p1 == p2)
+                return p1;
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+        if (p1 != null) {
+            while (p1 != null) {
+                p1 = p1.next;
+                k++;
+            }
+            while (k > 0) {
+                headA = headA.next;
+                k--;
+            }
+            while (headA != null) {
+                if (headA == headB)
+                    return headA;
+                headA = headA.next;
+                headB = headB.next;
+            }
+        } else if (p2 != null) {
+            while (p2 != null) {
+                p2 = p2.next;
+                k++;
+            }
+            while (k > 0) {
+                headB = headB.next;
+                k--;
+            }
+            while (headB != null) {
+                if (headA == headB)
+                    return headB;
+                headA = headA.next;
+                headB = headB.next;
+            }
+        }
+        return null;
+    }
+}
 
-//先取得两个链表的长度，将长度较长的链表多出的部分去掉，然后同步往后走，相同时返回即可
+// 答案一
+// 先取得两个链表的长度，将长度较长的链表多出的部分去掉，然后同步往后走，相同时返回即可
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if (headA == null || headB == null)
