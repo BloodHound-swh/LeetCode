@@ -1,57 +1,26 @@
-/*
+/**
  * 前K个高频元素
+
 给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
 
-例如，
+示例 1:
 
-给定数组 [1,1,1,2,2,3] , 和 k = 2，返回 [1,2]。
+输入: nums = [1,1,1,2,2,3], k = 2
+输出: [1,2]
+示例 2:
 
-注意：
+输入: nums = [1], k = 1
+输出: [1]
+说明：
 
-你可以假设给定的 k 总是合理的，1 ≤ k ≤ 数组中不相同的元素的个数。
+你可以假设给定的 k 总是合理的，且 1 ≤ k ≤ 数组中不相同的元素的个数。
 你的算法的时间复杂度必须优于 O(n log n) , n 是数组的大小。
  */
 
-// 使用的是桶排序，先用map将数字与它的频率存储下来，然后在频率-坐标放到一个数组之中，按照评率从后往前输出
-class Solution {
-    public List<Integer> topKFrequent(int[] nums, int k) {
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-        for (int num : nums) {
-            if (map.containsKey(num)) {
-                map.put(num, map.get(num) + 1);
-            } else {
-                map.put(num, 1);
-            }
-        }
-        int max = 0;
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            max = Math.max(max, entry.getValue());
-        }
-        ArrayList<Integer>[] arr = (ArrayList<Integer>[]) new ArrayList[max + 1];
-        for (int i = 1; i <= max; i++) {
-            arr[i] = new ArrayList<Integer>();
-        }
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            int count = entry.getValue();
-            int number = entry.getKey();
-            arr[count].add(number);
-        }
-        List<Integer> result = new ArrayList<Integer>();
-        for (int j = max; j >= 1; j--) {
-            if (arr[j].size() > 0) {
-                for (int a : arr[j]) {
-                    result.add(a);
-                    if (result.size() == k) {
-                        return result;
-                    }
-                }
-            }
-        }
-        return result;
-    }
-}
+// 未看答案没有做出
 
-// 优化
+
+// 答案一
 class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         List<Integer> ans = new ArrayList<>();
@@ -79,7 +48,7 @@ class Solution {
     }
 }
 
-// 优化2
+// 答案二，其实思路差不多
 class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
@@ -102,7 +71,7 @@ class Solution {
             if (bucket[i] != null) {
                 List<Integer> list = bucket[i];
                 res.addAll(list);
-                k -= list.size();
+                k -= list.size(); // 因为有些数字出现的频率可能相同
             }
         }
 
