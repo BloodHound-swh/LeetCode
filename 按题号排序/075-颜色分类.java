@@ -116,7 +116,7 @@ class Solution {
 }
 
 // 答案二
-// 冒泡法？
+// 类似冒泡法
 class Solution {
     public void sortColors(int[] nums) {
         if (nums.length <= 1)
