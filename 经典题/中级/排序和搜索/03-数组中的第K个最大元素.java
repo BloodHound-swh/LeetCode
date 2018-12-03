@@ -1,4 +1,4 @@
-/**
+/*
  * 数组中的第K个最大元素 在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的
  * 素。
  * 
@@ -11,7 +11,8 @@
  * 你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。
  */
 
-// 使用快速排序的思想，每次把大于pivot的数放左边，小于pivot的数放在右边，然后看pos+1的位置与k的关系，大于k，则把右边界设为pos-1，否则就把左边界设为pos+1，等于的话就返回nums[pos]
+// 使用快速排序的思想，每次把大于pivot的数放左边，小于pivot的数放在右边。
+// 然后看pos+1的位置与k的关系，大于k，则把右边界设为pos-1，否则就把左边界设为pos+1，等于的话就返回nums[pos]
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         if (nums == null || nums.length == 0)
@@ -43,7 +44,7 @@ class Solution {
             if (nums[r] <= pivot)
                 r--;
         }
-        swap(nums, left, r);
+        swap(nums, left, r); // 在l == r 时，如果此时的nums[r] < pivot时，在while中r--了，所以可以保证这时swap依然是左大右小
         return r;
     }
 
