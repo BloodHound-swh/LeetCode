@@ -1,5 +1,6 @@
-/*
+/**
  * 合并区间
+
 给出一个区间的集合，请合并所有重叠的区间。
 
 示例 1:
@@ -14,23 +15,44 @@
 解释: 区间 [1,4] 和 [4,5] 可被视为重叠区间。
  */
 
+// 未看答案，一脸懵逼。。。
+
+
+// 答案一
+// 使用Collection对区间按照start的大小排序，然后对每个区间进行判定
 /*
- * 下面这种解法将起始位置和结束位置分别存到了两个不同的数组starts和ends中，然后分别进行排序.
- * 之后用两个指针i和j，初始化时分别指向starts和ends数组的首位置
- * 然后如果i指向starts数组中的最后一个位置，或者当starts数组上i+1位置上的数字大于ends数组的i位置上的数时，此时说明区间已经不连续了
- * 我们来看题目中的例子，排序后的starts和ends为：
-
-starts:    1    2    8    15
-
-ends:     3    6    10    18
-
-红色为i的位置，蓝色为j的位置，那么此时starts[i+1]为8，ends[i]为6，8大于6，所以此时不连续了，将区间[starts[j], ends[i]]，即 [1, 6] 加入结果res中，然后j赋值为i+1继续循环
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
  */
-/*
- * Definition for an interval. public class Interval { int start; int end;
- * Interval() { start = 0; end = 0; } Interval(int s, int e) { start = s; end =
- * e; } }
- */
+class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        if (intervals == null || intervals.size() <= 1)
+            return intervals;
+        Collections.sort(intervals, (a, b) -> a.start - b.start);
+        int start = intervals.get(0).start;
+        int end = intervals.get(0).end;
+        List<Interval> res = new ArrayList<>();
+        for (Interval interval : intervals) {
+            if (interval.start <= end) {
+                end = Math.max(end, interval.end);
+            } else {
+                res.add(new Interval(start, end));
+                start = interval.start;
+                end = interval.end;
+            }
+        }
+        res.add(new Interval(start, end));
+        return res;
+    }
+}
+
+// 答案二，有些复杂，不如答案一直观
+// http://www.cnblogs.com/grandyang/p/4370601.html
 class Solution {
     public List<Interval> merge(List<Interval> intervals) {
         List<Interval> res = new LinkedList<Interval>();
@@ -80,28 +102,5 @@ class Solution {
         }
         return res;
 
-    }
-}
-
-// 使用collection对区间按照start的大小排序，然后对每个区间进行判定
-class Solution {
-    public List<Interval> merge(List<Interval> intervals) {
-        if (intervals == null || intervals.size() <= 1)
-            return intervals;
-        Collections.sort(intervals, (a, b) -> a.start - b.start); // 重写了Comparator里的compare方法http://how2j.cn/k/collection/collection-comparator-comparable/693.html#nowhere
-        int start = intervals.get(0).start;
-        int end = intervals.get(0).end;
-        List<Interval> res = new ArrayList<>();
-        for (Interval interval : intervals) {
-            if (interval.start <= end) {
-                end = Math.max(end, interval.end);
-            } else {
-                res.add(new Interval(start, end));
-                start = interval.start;
-                end = interval.end;
-            }
-        }
-        res.add(new Interval(start, end));
-        return res;
     }
 }
