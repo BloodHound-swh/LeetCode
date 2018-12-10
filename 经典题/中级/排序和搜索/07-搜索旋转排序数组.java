@@ -1,5 +1,6 @@
-/**
- * 搜索旋转排序数组 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+/*
+ * 搜索旋转排序数组 
+ * 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
  * 
  * ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。
  * 
@@ -16,6 +17,7 @@
  * 输入: nums = [4,5,6,7,0,1,2], target = 3 输出: -1
  */
 // 旋转数组必然分成两段考虑，所以分两种情况，在左端时考虑右指针向mid移动的情况，在右段时考虑左指针向mid移动的情况
+// 注意等号不能少
 class Solution {
     public int search(int[] nums, int target) {
         if (nums == null || nums.length == 0)
@@ -47,7 +49,7 @@ class Solution {
     }
 }
 
-// 省去了后面的判定，但是还是用方法一比较安全
+// 使用的是模板一的变形，注意等号不能少。
 class Solution {
     public int search(int[] nums, int target) {
         int len = nums.length, left = 0, right = len - 1;
