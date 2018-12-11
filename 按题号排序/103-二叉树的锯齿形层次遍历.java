@@ -1,5 +1,6 @@
-/*
+/**
  * 二叉树的锯齿形层次遍历
+
 给定一个二叉树，返回其节点值的锯齿形层次遍历。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
 
 例如：
@@ -19,8 +20,9 @@
 ]
  */
 
+// 未看答案没有做出
 
-/**
+/*
  * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
@@ -30,38 +32,44 @@
  * }
  */
 
+// 答案一
 // 使用一个list来存储每层元素，使用clist来存储每层的输出答案，leftToRight作为标志位来决定顺序
 // 当leftToRight位true，则先左后右存储下一层的元素在list的末尾，否则先右后左的存储下一层元素在list的开头
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> result = new LinkedList<List<Integer>>();
-        if (root == null) return result;
-        LinkedList<TreeNode> list = new LinkedList<TreeNode>();
-        boolean leftToRight = true;
+        List<List<Integer>> res = new LinkedList<>();
+        if (root == null)
+            return res;
+        LinkedList<TreeNode> list = new LinkedList<>();
         list.add(root);
-        
-        while(!list.isEmpty()){
+        boolean leftToRight = true;
+
+        while (!list.isEmpty()) {
             int size = list.size();
-            LinkedList<Integer> clist = new LinkedList<Integer>();
+            LinkedList<Integer> clist = new LinkedList<>();
             if (leftToRight) {
                 for (int i = 0; i < size; i++) {
                     TreeNode curr = list.remove(0);
                     clist.add(curr.val);
-                    if (curr.left != null) list.add(curr.left);
-                    if (curr.right != null) list.add(curr.right);
+                    if (curr.left != null)
+                        list.add(curr.left);
+                    if (curr.right != null)
+                        list.add(curr.right);
                 }
             } else {
                 for (int i = 0; i < size; i++) {
                     TreeNode curr = list.remove(list.size() - 1);
                     clist.add(curr.val);
-                    if (curr.right != null) list.add(0, curr.right);
-                    if (curr.left != null) list.add(0, curr.left);
+                    if (curr.right != null)
+                        list.add(0, curr.right);
+                    if (curr.left != null)
+                        list.add(0, curr.left);
                 }
             }
-            result.add(clist);
+            res.add(clist);
             leftToRight = !leftToRight;
         }
-        return result;
+        return res;
     }
 }
 
