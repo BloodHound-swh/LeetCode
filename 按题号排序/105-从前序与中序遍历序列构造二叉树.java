@@ -1,5 +1,6 @@
-/*
-从前序与中序遍历序列构造二叉树
+/**
+ * 从前序与中序遍历序列构造二叉树
+
 根据一棵树的前序遍历与中序遍历构造二叉树。
 
 注意:
@@ -18,6 +19,8 @@
    15   7
  */
 
+// 未看答案时，递归没有头绪。。。
+
 /*
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -27,7 +30,7 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-
+// 答案一
 // https://www.youtube.com/watch?v=S1wNG5hx-30
 // 使用pre-st来从preorder中找到根节点，用in_st从inorder中找到左子树的起始位置，in_end找到结束位置
 class Solution {
@@ -38,11 +41,13 @@ class Solution {
     }
 
     public TreeNode buildTreeHelper(int[] preorder, int[] inorder, int pre_st, int in_st, int in_end) {
-        if (pre_st > preorder.length || in_st > in_end)
+        if (pre_st > preorder.length || in_st > in_end) {
             return null;
+        }
+
         TreeNode current = new TreeNode(preorder[pre_st]);
         int i = in_st;
-        while (i <= in_end) {
+        while (i < in_end) {
             if (inorder[i] == preorder[pre_st])
                 break;
             i++;
@@ -53,6 +58,7 @@ class Solution {
     }
 }
 
+// 答案二
 // 换一种写法
 class Solution {
     // 写法仿照 剑指offer 面试题7 重建二叉树
