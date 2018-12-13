@@ -1,5 +1,6 @@
-/*
+/**
  * 填充同一层的兄弟节点
+
 给定一个二叉树
 
 struct TreeLinkNode {
@@ -34,6 +35,8 @@ struct TreeLinkNode {
 4->5->6->7 -> NULL
  */
 
+// 未看答案没有做出，递归终止条件比较简单，但是递归中next如何确定不清楚
+
 /*
  * Definition for binary tree with next pointer.
  * public class TreeLinkNode {
@@ -43,22 +46,26 @@ struct TreeLinkNode {
  * }
  */
 
-// 先将每个节点的左右孩子连接，然后连接左节点的右孩子，和右节点的左孩子
+//  答案一
 public class Solution {
     public void connect(TreeLinkNode root) {
         if (root == null)
             return;
+
         if (root.left != null) {
             root.left.next = root.right;
         }
-        if (root.next != null && root.right != null) {
+
+        if (root.right != null && root.next != null) {
             root.right.next = root.next.left;
         }
+
         connect(root.left);
         connect(root.right);
     }
 }
 
+// 答案二
 // 相同的思路，换一种写法
 public class Solution {
     public void connect(TreeLinkNode root) {
@@ -82,6 +89,7 @@ public class Solution {
     }
 }
 
+// 答案三
 // 写法三
 public class Solution {
     public void connect(TreeLinkNode root) {
