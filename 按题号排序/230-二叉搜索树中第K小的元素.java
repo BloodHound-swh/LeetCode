@@ -1,5 +1,6 @@
-/*
-二叉搜索树中第K小的元素
+/**
+ * 二叉搜索树中第K小的元素
+
 给定一个二叉搜索树，编写一个函数 kthSmallest 来查找其中第 k 个最小的元素。
 
 说明：
@@ -27,7 +28,11 @@
 输出: 3
 进阶：
 如果二叉搜索树经常被修改（插入/删除操作）并且你需要频繁地查找第 k 小的值，你将如何优化 kthSmallest 函数？
+
+
  */
+
+// 未看答案没有写出，因为如何利用一个变量来确定第k小的数不会。。。
 
 /*
  * Definition for a binary tree node.
@@ -39,10 +44,10 @@
  * }
  */
 
-// 使用一个栈，先每次将左孩子压入栈中，直到最小元素，然后回退，并且每后退一步k--,同时判定此时的右孩子
+//  答案一
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> stack = new Stack<>();
 
         TreeNode p = root;
         int res = 0;
@@ -59,19 +64,21 @@ class Solution {
                 p = t.right;
             }
         }
+
         return res;
     }
 }
 
+// 答案二
+// 递归
 // 同一思路，不过此法使用了全局变量
 class Solution {
     int cnt, res;
-
     public int kthSmallest(TreeNode root, int k) {
-        if (root == null)
+        if(root == null) 
             return 0;
         kthSmallest(root.left, k);
-        if (++cnt == k)
+        if(++cnt == k) 
             res = root.val;
         kthSmallest(root.right, k);
         return res;
