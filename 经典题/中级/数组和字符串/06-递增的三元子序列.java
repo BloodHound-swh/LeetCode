@@ -1,4 +1,4 @@
-/**
+/*
  * 递增的三元子序列
 给定一个未排序的数组，请判断这个数组中是否存在长度为3的递增的子序列。
 
@@ -16,26 +16,25 @@
 输出 false.
  */
 
-
-
-//使用两个min来维护，取三个区间，当三个区间均存在符合的数字时，即可返回true
+// 使用两个min来维护，取三个区间，当三个区间均存在符合的数字时，即可返回true
 class Solution {
     public boolean increasingTriplet(int[] nums) {
-        if (nums.length <= 2) return false;
+        if (nums.length <= 2)
+            return false;
         int min1 = Integer.MAX_VALUE;
         int min2 = Integer.MAX_VALUE;
-        
+
         for (int i = 0; i < nums.length; i++) {
             int curr = nums[i];
-            //case 3
+            // case 3
             if (curr > min2) {
                 return true;
             }
-            //case 1
+            // case 1
             else if (curr < min1) {
                 min1 = curr;
             }
-            //case 2
+            // case 2
             else if (curr > min1 && curr < min2) {
                 min2 = curr;
             }
@@ -44,24 +43,17 @@ class Solution {
     }
 }
 
-
-//更改一下case的顺序，发现运行时间少很多
+// 更改一下case的顺序，发现运行时间少很多
 class Solution {
     public boolean increasingTriplet(int[] nums) {
         int start = Integer.MAX_VALUE;
         int medio = Integer.MAX_VALUE;
-        for(int i = 0; i < nums.length; i++)
-        {
-            if(nums[i] < start)
-            {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < start) {
                 start = nums[i];
-            }
-            else if(nums[i] > start && nums[i] < medio)
-            {
+            } else if (nums[i] > start && nums[i] < medio) {
                 medio = nums[i];
-            }
-            else if(nums[i] > medio)
-            {
+            } else if (nums[i] > medio) {
                 return true;
             }
         }
