@@ -44,7 +44,7 @@ class Solution {
 }
 
 
-// 好像不用管溢出也没事。。。
+// 好像不用管溢出也没事，应该是测试样例的问题，或者说此时的值已经趋于零了，是测不出来的。。。
 class Solution {
     public double myPow(double x, int n) {
         boolean reverse = false;
