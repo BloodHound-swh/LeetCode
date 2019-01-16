@@ -1,5 +1,6 @@
-/*
+/**
  * x 的平方根
+
 实现 int sqrt(int x) 函数。
 
 计算并返回 x 的平方根，其中 x 是非负整数。
@@ -18,7 +19,58 @@
      由于返回类型是整数，小数部分将被舍去。
  */
 
-// 使用二分法，看mid的平方与x的大小关系
+// 未看答案版，效率很低
+class Solution {
+    public int mySqrt(int x) {
+        if (x == 0)
+            return 0;
+        if (x == 1 || x == 2)
+            return 1;
+        long i = 1;
+        long temp = 0;
+        while (i < x) {
+            temp = i * i;
+            if (temp > x) {
+                return (int) --i;
+            } else if (temp == x) {
+                return (int) i;
+            } else {
+                i++;
+            }
+        }
+        return -1;
+    }
+}
+
+// 答案一
+// 二分法
+class Solution {
+    public int mySqrt(int x) {
+        int start = 0;
+        int end = x;
+
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (x / mid == mid) { // 用除号可以防止溢出
+                return mid;
+            } else if (x / mid < mid) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+
+        if (end == 46341) { // 防止end * end 溢出
+            return 46340;
+        } else if (end * end <= x) {
+            return end;
+        } else {
+            return start;
+        }
+    }
+}
+
+// 同上
 class Solution {
     public int mySqrt(int x) {
         if (x <= 0)
@@ -42,6 +94,7 @@ class Solution {
     }
 }
 
+// 答案二，找通项公式
 // 因为各平方数之间的差值是个等差数列，可以找到通项公式
 // https://www.youtube.com/watch?v=JtZBs9Qy_6M
 class Solution {
@@ -59,20 +112,5 @@ class Solution {
             add = add + 2;
         }
         return res - 1;
-    }
-}
-
-// 牛顿迭代法，直接使用数学公式
-public class Solution {
-    public int mySqrt(int x) {
-        if (x == 0)
-            return 0;
-        double y = Math.max(1, x / 2);
-        while (true) {
-            double ny = (((double) y * y + x) / 2 / y);
-            if (Math.abs(y - ny) <= 0.01)
-                return (int) ny;
-            y = ny;
-        }
     }
 }
