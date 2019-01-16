@@ -1,5 +1,6 @@
-/*
+/**
  * 两数相除
+
 给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
 
 返回被除数 dividend 除以除数 divisor 得到的商。
@@ -19,6 +20,10 @@
 假设我们的环境只能存储 32 位有符号整数，其数值范围是 [−2^31,  2^31 − 1]。本题中，如果除法结果溢出，则返回 2^31 − 1。
  */
 
+// 未看答案没有做出，这种题如何没思路就直接看答案了。
+
+
+// 答案一
 // 让除数乘2，逼近被除数知道超过，然后被除数减去之前的最大值，所得的差值如果依然大于除数，让除数重新乘2继续逼近
 class Solution {
     public int divide(int dividend, int divisor) {
@@ -54,6 +59,7 @@ class Solution {
     }
 }
 
+// 答案二，思想同上
 // 简化了符号判定部分的代码
 class Solution {
     public int divide(int dividend, int divisor) {
