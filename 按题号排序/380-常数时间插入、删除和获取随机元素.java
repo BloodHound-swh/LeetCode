@@ -1,5 +1,6 @@
-/*
- *  Insert Delete GetRandom O(1)
+/**
+ * 常数时间插入、删除和获取随机元素
+
 设计一个支持在平均 时间复杂度 O(1) 下，执行以下操作的数据结构。
 
 insert(val)：当元素 val 不存在时，向集合中插入该项。
@@ -34,6 +35,8 @@ randomSet.getRandom();
 
 
 
+// 如何保证删除插入都是O(1)以及如何支持随机访问时难点
+
 // 因为有时间复杂度的要求，所以使用HashMap来做插入和删除的处理，这样在判定过程中就是O(1)的复杂度，键：value，值：index
 // 使用ArrayList来存储HashMap的键，也就是val，因为只有ArrayList才能getRandom。
 // 利用到了一个一维数组和一个哈希表，其中数组用来保存数字，哈希表用来建立每个数字和其在数组中的位置之间的映射，
@@ -42,15 +45,14 @@ randomSet.getRandom();
 // 由于哈希表的删除是常数时间的，而数组并不是，为了使数组删除也能常数级，我们实际上将要删除的数字和数组的最后一个数字调换个位置，然后修改对应的哈希表中的值，这样我们只需要删除数组的最后一个元素即可，保证了常数时间内的删除。
 // 而返回随机数对于数组来说就很简单了，我们只要随机生成一个位置，返回该位置上的数字即可
 class RandomizedSet {
-    ArrayList<Integer> nums;
-    HashMap<Integer, Integer> num2index;
-    Random rand;
+    List<Integer> list; // 用来支持随机访问
+    Map<Integer, Integer> map; // 用来支持插入删除的时间复杂度都是O(1)
+    Random rand = new Random(); // 用来生成随机数
 
     /** Initialize your data structure here. */
     public RandomizedSet() {
-        nums = new ArrayList<Integer>();
-        num2index = new HashMap<Integer, Integer>();
-        rand = new Random();
+        list = new ArrayList<>();
+        map = new HashMap<>();
     }
 
     /**
@@ -58,11 +60,10 @@ class RandomizedSet {
      * the specified element.
      */
     public boolean insert(int val) {
-        if (num2index.containsKey(val)) {
+        if (map.containsKey(val))
             return false;
-        }
-        num2index.put(val, nums.size());
-        nums.add(val);
+        list.add(val);
+        map.put(val, list.size() - 1);
         return true;
     }
 
@@ -71,23 +72,22 @@ class RandomizedSet {
      * element.
      */
     public boolean remove(int val) {
-        if (!num2index.containsKey(val)) {
+        if (!map.containsKey(val))
             return false;
+        int index = map.get(val); // 获取要删除数字的坐标
+        if (index != list.size() - 1) {
+            int last = list.get(list.size() - 1); // 获取list中最后一个数字
+            map.put(last, index); // 将list中的最后一个数字的坐标改成要删除数字的坐标
+            list.set(index, last); // 将list中的最后一个数字复制到要删除数字的位置上
         }
-        int index = num2index.get(val);
-        if (index < nums.size() - 1) {
-            int last = nums.get(nums.size() - 1);
-            nums.set(index, last);
-            num2index.put(last, index);
-        }
-        num2index.remove(val);
-        nums.remove(nums.size() - 1);
+        list.remove(list.size() - 1);
+        map.remove(val);
         return true;
     }
 
     /** Get a random element from the set. */
     public int getRandom() {
-        return nums.get(rand.nextInt(nums.size()));
+        return list.get(rand.nextInt(list.size()));
     }
 }
 
