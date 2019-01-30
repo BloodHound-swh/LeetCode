@@ -1,5 +1,6 @@
-/*
+/**
  * 逆波兰表达式求值
+
 根据逆波兰表示法，求表达式的值。
 
 有效的运算符包括 +, -, *, / 。每个运算对象可以是整数，也可以是另一个逆波兰表达式。
@@ -30,9 +31,43 @@
 = (0 + 17) + 5
 = 17 + 5
 = 22
-
  */
 
+// 未看答案是的思路是对的，但是在细节处，例如如何判断tokens[i]是数字还是运算符应该怎样写不太清楚。另外，switch语法需要熟悉
+
+// 未看答案版(有查找资料)
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+        String operators = "+-*/";
+        for (int i = 0; i < tokens.length; i++) {
+            if (!operators.contains(tokens[i])) {
+                stack.push(Integer.valueOf(tokens[i]));
+                continue;
+            }
+            int a = stack.pop();
+            int b = stack.pop();
+
+            switch (tokens[i]) {
+            case "+":
+                stack.push(b + a);
+                break;
+            case "-":
+                stack.push(b - a);
+                break;
+            case "*":
+                stack.push(b * a);
+                break;
+            case "/":
+                stack.push(b / a);
+                break;
+            }
+        }
+        return stack.pop();
+    }
+}
+
+// 答案一
 // 使用stack来解决，注意本题不考虑括号
 class Solution {
     public int evalRPN(String[] tokens) {
