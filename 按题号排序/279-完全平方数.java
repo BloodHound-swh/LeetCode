@@ -1,5 +1,6 @@
-/*
- * Perfect Squares
+/**
+ * 完全平方数
+
 给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
 
 示例 1:
@@ -13,6 +14,10 @@
 输出: 2
 解释: 13 = 4 + 9.
  */
+
+
+
+// 未看答案没有做出，完全没有思路。。。。
 
 // 如果一个数x可以表示为一个任意数a加上一个平方数bｘb，也就是x=a+bｘb
 // 那么能组成这个数x最少的平方数个数，就是能组成a最少的平方数个数加上1（因为b*b已经是平方数了）。
@@ -35,42 +40,5 @@ class Solution {
         }
 
         return dp[n];
-    }
-}
-
-// 使用四平方和定理，感觉这题还是用动态规划比较符合出题意图
-class Solution {
-    public int numSquares(int n) {
-        while (n % 4 == 0)
-            n /= 4;
-
-        if (n % 8 == 7)
-            return 4;
-
-        for (int a = 0; a * a <= n; a++) {
-            int b = (int) Math.sqrt(n - a * a);
-            if (a * a + b * b == n)
-                return (a == 0 ? 0 : 1) + (b == 0 ? 0 : 1);
-        }
-        return 3;
-    }
-
-}
-
-// 动态规划。这是一道非常非常典型的动态规划问题。
-// 1. 首先如何定义问题？这个问题就是，f(i)=对于任意一个正整数i，求i由多少个整数平方和组成。
-// 2. 如何得到最终问题f(n)？方法就是从1开始计算，f(1)，f(2)，直到f(n)
-// 3. 每个f(i)如何计算？每个f(i)只和前面的f值有关！！！
-public class Solution {
-    public int numSquares(int n) {
-        int[] nums = new int[n + 1];
-        for (int i = 1; i <= n; i++)
-            nums[i] = i;
-        for (int i = 2; i <= n; i++) {
-            for (int j = 1; j * j <= i; j++) {
-                nums[i] = Math.min(nums[i], nums[i - j * j] + 1);
-            }
-        }
-        return nums[n];
     }
 }
