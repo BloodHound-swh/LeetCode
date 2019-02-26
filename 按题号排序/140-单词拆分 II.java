@@ -1,5 +1,6 @@
 /**
  * 单词拆分 II
+
 给定一个非空字符串 s 和一个包含非空单词列表的字典 wordDict，在字符串中增加空格来构建一个句子，使得句子中所有的单词都在词典中。返回所有这些可能的句子。
 
 说明：
@@ -37,6 +38,9 @@ wordDict = ["cats", "dog", "sand", "and", "cat"]
 []
  */
 
+// 即便是暴力循环都不是很好写。而且此题需要使用memorize list来记录已经分好的结果
+
+// 答案一
 // 使用递归查找，从前往后，每次找到包含在wordDict中的单词就切割下来，然后把后面的字符串再调用helper函数
 // https://www.youtube.com/watch?v=pYKGRZwbuzs&t=645s
 class Solution {
@@ -69,7 +73,7 @@ class Solution {
                 if (suffixRes == null) { // 当前词本身全部都在字典里了
                     res.add(sub);
                 } else {
-                    for (String str : suffixRes) { 
+                    for (String str : suffixRes) {
                         res.add(sub + " " + str); // sub + str 形成新的一个str
                     }
                 }
@@ -80,7 +84,7 @@ class Solution {
     }
 }
 
-// DFS
+// 答案二，思路同上
 class Solution {
     public List<String> wordBreak(String s, List<String> wordDict) {
         return DFS(s, wordDict, new HashMap<String, LinkedList<String>>());
