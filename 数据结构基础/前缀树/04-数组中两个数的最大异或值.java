@@ -87,3 +87,45 @@ class Solution {
         return res;
     }
 }
+
+// 优化
+// 显然上面的方法有很多重复计算的部分，假设ai的最大异或值是 ai xor aj，那么aj的最大值肯定也是 aj xor ai，这里就是重复计算。
+// 因此，我决定改成在建立Trie树的同时，对于正在插入的数，在已插入的数中查找能得到的最大异或值，即边建Trie边查找最大值，这样做也能得到正确的最大异或值。
+class Solution {
+    class Trie {
+        Trie[] next;
+
+        public Trie() {
+            next = new Trie[2];
+        }
+    }
+
+    public int findMaximumXOR(int[] nums) {
+        if (nums.length <= 1 || nums == null)
+            return 0;
+        Trie root = new Trie();
+        int result = 0;
+        for (int num : nums) {
+            int xor = 0;
+            Trie insert = root, search = root;
+            for (int i = 30; i >= 0; i--) {
+                int bit = (num >>> i) & 1;
+                int rbit = bit ^ 1;
+                if (insert.next[bit] == null) {
+                    insert.next[bit] = new Trie();
+                }
+                insert = insert.next[bit];
+                if (search != null) {
+                    if (search.next[rbit] != null) {
+                        xor += (1 << i);
+                        search = search.next[rbit];
+                    } else {
+                        search = search.next[bit];
+                    }
+                }
+            }
+            result = Math.max(result, xor);
+        }
+        return result;
+    }
+}
