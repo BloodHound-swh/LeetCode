@@ -1,5 +1,5 @@
-/**
- * Remove Invalid Parentheses
+/*
+ * 删除无效的括号
 删除最小数量的无效括号，使得输入的字符串有效，返回所有可能的结果。
 
 说明: 输入可能包含了除 ( 和 ) 以外的字符。
@@ -48,7 +48,7 @@ class Solution {
     }
 
     public void dfs(StringBuilder sb, int index, int l, int r, List<String> results) {
-        if (l == 0 && r == 0) {
+        if (l == 0 && r == 0) { // 不能少，因为即便是r = l = 0, 可能括号的顺序是反的
             if (isValid(sb)) {
                 results.add(sb.toString());
             }
