@@ -1,5 +1,6 @@
 /**
  * 单词搜索 II
+
 给定一个二维网格 board 和一个字典中的单词列表 words，找出所有同时在二维网格和字典中出现的单词。
 
 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母在一个单词中不允许被重复使用。
@@ -25,6 +26,9 @@ words = ["oath","pea","eat","rain"] and board =
 如果当前单词不存在于所有单词的前缀中，则可以立即停止回溯。什么样的数据结构可以有效地执行这样的操作？散列表是否可行？为什么？ 前缀树如何？如果你想学习如何实现一个基本的前缀树，请先查看这个问题： 实现Trie（前缀树）。
  */
 
+
+// 想到了使用DFS，但是如何目前的prefix已经确定不可能是单词的情况下如何退出不请吃。实际上，这里应该是用前缀树。
+// 另外，在DFS后，visited的相应位置应该重新置为false
 
 // 首先想到的是使用DFS递归来查找字符串，当发现当前字符串prefix就已经不可能我是我们要找的单词的前缀的时候就结束搜索
 // 这时候就想到了用到前缀树，这样可以大大降低搜索的复杂度
@@ -128,46 +132,6 @@ class Solution {
         }
     }
 }
-
-// dfs时也可以不用到visited[][], 下面是在网上找到的参考 对于已经遍历过得数先复制为#，之后再还原即可
-/**
- * private void dfs(char[][] board, int row, int column, PrefixTreeNode node, List<String> result) {
-        // 判断当前下标是否合法
-        boolean validIndex = row >= 0 && column >= 0
-                && row < board.length && column < board[0].length;
-        if (!validIndex) {
-            return;
-        }
-
-        // 如果当前遍历的字符为'#'，则说明该字符已经被使用过，返回。
-        // 如果该字符在给定的所有单词构造的前缀树中不存在，则说明该字符不是任何单词的前缀，直接返回
-        char c = board[row][column];
-        if (c == '#' || node.links[c - 'a'] == null) {
-            return;
-        }
-
-        // 继续遍历前缀树的下一个节点。如果遍历到前缀树中一个节点对应的单词不为空，则说明该单词可以在
-        // 字符数组中查到，此时将该单词加入到结果中。为了避免重复，查到单词后，将节点中的单词置为空
-        node = node.links[c - 'a'];
-        if (node.word.length() != 0) {
-            result.add(node.word);
-            node.word = "";
-        }
-
-        // 标记字符被使用过
-        board[row][column] = '#';
-
-        // 进行上下左右搜索
-        dfs(board, row - 1, column, node, result);
-        dfs(board, row + 1, column, node, result);
-        dfs(board, row, column - 1, node, result);
-        dfs(board, row, column + 1, node, result);
-
-        // 还原字符
-        board[row][column] = c;
-    }
-}
- */
 
 // 当然HashMap的Trie也可以
 class TrieNode {
