@@ -1,4 +1,4 @@
-/**
+/*
  * 正则表达式匹配
 给定一个字符串 (s) 和一个字符模式 (p)。实现支持 '.' 和 '*' 的正则表达式匹配。
 
@@ -79,41 +79,36 @@ class Solution {
 // 方法二不是很懂，大概解释一下
 /**
  * 我们举个例子
-
-match:   0 0 0 1
-string:  a a b
-pattern: a * b
-             |
-这里我们先看pattern最后一位b能匹配到多少，这里因为b不是星号，
-所以我们从左往右尝试匹配string，第一个a不行，第二个a也不行，然后到b，这里因为match[3]是true，b也和b相同，所以匹配成功。
-
-match:   0 0 1 1
-string:  a a b
-pattern: a * b
-           |
-然后看pattern的这个星号，我们要从后往前匹配string。因为b已经被匹配了，match[2]是true，所以直接跳过。
-然后到a，发现个pattern中星号前面的字符a相同，所以匹配成功，match[1]也置为true再看string的第一个a，还是可以匹配成功，这样整个string都被匹配成功了。
-
-这里还有几个情况，首先，无论刚才那pattern中最后一个b有没有匹配到string中任何一个字符，match[3]也要置为false。
-这样才能防止pattern最后字母没有匹配上，而pattern前面的部分反而把string的结尾给匹配了。还有如果pattern中是句号的话，那相当于字符相同。
-
-
+ * 
+ * match: 0 0 0 1 string: a a b pattern: a * b |
+ * 这里我们先看pattern最后一位b能匹配到多少，这里因为b不是星号，
+ * 所以我们从左往右尝试匹配string，第一个a不行，第二个a也不行，然后到b，这里因为match[3]是true，b也和b相同，所以匹配成功。
+ * 
+ * match: 0 0 1 1 string: a a b pattern: a * b |
+ * 然后看pattern的这个星号，我们要从后往前匹配string。因为b已经被匹配了，match[2]是true，所以直接跳过。
+ * 然后到a，发现个pattern中星号前面的字符a相同，所以匹配成功，match[1]也置为true再看string的第一个a，还是可以匹配成功，这样整个string都被匹配成功了。
+ * 
+ * 这里还有几个情况，首先，无论刚才那pattern中最后一个b有没有匹配到string中任何一个字符，match[3]也要置为false。
+ * 这样才能防止pattern最后字母没有匹配上，而pattern前面的部分反而把string的结尾给匹配了。还有如果pattern中是句号的话，那相当于字符相同。
+ * 
+ * 
  */
 public class Solution {
     public boolean isMatch(String s, String p) {
         boolean[] match = new boolean[s.length() + 1];
         match[s.length()] = true;
-        for(int i = p.length() - 1; i >=0; i--){
-            if(p.charAt(i) == '*'){
+        for (int i = p.length() - 1; i >= 0; i--) {
+            if (p.charAt(i) == '*') {
                 // 如果是星号，从后往前匹配
-                for(int j = s.length() - 1; j >= 0; j--){
-                    match[j] = match[j] || (match[j + 1] && (p.charAt(i - 1) == '.' || (p.charAt(i - 1) == s.charAt(j)))); 
+                for (int j = s.length() - 1; j >= 0; j--) {
+                    match[j] = match[j]
+                            || (match[j + 1] && (p.charAt(i - 1) == '.' || (p.charAt(i - 1) == s.charAt(j))));
                 }
                 // 记得把i多减一，因为星号是和其前面的字符配合使用的
                 i--;
             } else {
                 // 如果不是星号，从前往后匹配
-                for(int j = 0; j < s.length(); j++){
+                for (int j = 0; j < s.length(); j++) {
                     match[j] = match[j + 1] && (p.charAt(i) == '.' || (p.charAt(i) == s.charAt(j)));
                 }
                 // 只要试过了pattern中最后一个字符，就要把match[s.length()]置为false
