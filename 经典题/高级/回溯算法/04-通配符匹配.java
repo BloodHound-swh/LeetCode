@@ -49,7 +49,7 @@ p = "a*c?b"
 // 动态规划
 // 使用match矩阵，match[i][j]表示p的前j个字符是否与s的前i个字符相匹配
 // 初始化时match[0][0] = true，match[i][0] = false(i不等于0)，match[0][j]如果p[j - 1]为*则与match[0][j - 1]相同
-// 之后再循环过程中，如何match（包括？）则与左上角相同
+// 之后再循环过程中，如果match（包括？）则与左上角相同
 // 如果有*，则与左边或者上边相同（左边或者上边任意有一个true则为true）
 class Solution {
     public boolean isMatch(String s, String p) {
