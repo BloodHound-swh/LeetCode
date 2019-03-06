@@ -1,4 +1,4 @@
-/**
+/*
  * 链表排序
 在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。
 
@@ -12,9 +12,7 @@
 输出: -1->0->3->4->5
  */
 
-
-
-/**
+/*
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
