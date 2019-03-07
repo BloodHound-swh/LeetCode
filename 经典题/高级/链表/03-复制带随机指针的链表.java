@@ -15,6 +15,7 @@
  * };
  */
 
+//  https://www.youtube.com/watch?v=kGfsMookkzw
 // 用Hash map，第一遍遍历生成所有新节点时同时建立一个原节点和新节点的哈希表
 // 第二遍给随机指针赋值(连接随机指针)
 public class Solution {
