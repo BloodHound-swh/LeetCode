@@ -1,4 +1,4 @@
-/**
+/*
  * 单词接龙
 给定两个单词（beginWord 和 endWord）和一个字典，找到从 beginWord 到 endWord 的最短转换序列的长度。转换需遵循如下规则：
 
@@ -68,23 +68,25 @@ class Solution {
             step++;
         }
         return 0;
-    }
-}
+    }}
 
-// newWord.setCharAt(i, letter) 是在i位替换为letter 
-// 也可以自己写
-for (int i = 0; i < currWord.length(); i++) {
-    char[] wordUnit = currWord.toCharArray();
-    for (char j = 'a'; j <= 'z'; j++) {
-        wordUnit[i] = j;
-        String temp = new String(wordUnit);
-    }
-}
+    // newWord.setCharAt(i, letter) 是在i位替换为letter
+    // 也可以自己写
+    for(
 
-// 方法二
-// https://www.youtube.com/watch?v=mgICIVXu2sQ
-// 虽然这个耗时较长，但是实际上避免了for循环中许多重复的操作，且易于理解
-// 对每一个单词，建立它能走到下一步的所有单词的list，然后从初试词开始进行广度优先遍历
+    int i = 0;i<currWord.length();i++)
+    {
+        char[] wordUnit = currWord.toCharArray();
+        for (char j = 'a'; j <= 'z'; j++) {
+            wordUnit[i] = j;
+            String temp = new String(wordUnit);
+        }
+    }
+
+    // 方法二
+    // https://www.youtube.com/watch?v=mgICIVXu2sQ
+    // 虽然这个耗时较长，但是实际上避免了for循环中许多重复的操作，且易于理解
+    // 对每一个单词，建立它能走到下一步的所有单词的list，然后从初试词开始进行广度优先遍历
 class Solution {
     HashMap<String, List<String>> map = new HashMap<String, List<String>>();
 
