@@ -1,4 +1,4 @@
-/**
+/*
  * 二叉树中的最大路径和
 给定一个非空二叉树，返回其最大路径和。
 
@@ -26,7 +26,7 @@
 输出: 42
  */
 
-/**
+/*
  * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
