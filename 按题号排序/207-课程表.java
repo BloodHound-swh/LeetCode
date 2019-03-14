@@ -1,5 +1,6 @@
-/*
- * 课程表
+/**
+ *课程表
+
 现在你总共有 n 门课需要选，记为 0 到 n-1。
 
 在选修某些课程之前需要一些先修课程。 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们: [0,1]
@@ -24,70 +25,33 @@
 
 这个问题相当于查找一个循环是否存在于有向图中。如果存在循环，则不存在拓扑排序，因此不可能选取所有课程进行学习。
 通过 DFS 进行拓扑排序 - 一个关于Coursera的精彩视频教程（21分钟），介绍拓扑排序的基本概念。
-拓扑排序也可以通过 BFS 完成。
+拓扑排序也可以通过 BFS 完成。 
  */
-
-// 使用HashMap来存放课程，以及它的后续课程列表
-// 使用一个数组来记录每一个课程的“入度”，即先决课程的个数
-// 使用BFS来遍历入度为零的课程，同时将它的后续课程列表中的课程入度减一，若发现某一课程入度为零了，则加入道队列之中
-class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
-        int[] inDegree = new int[numCourses];
-        if (prerequisites == null || prerequisites.length == 0)
-            return true;
-        HashMap<Integer, List<Integer>> graph = new HashMap<Integer, List<Integer>>();
-        for (int i = 0; i < prerequisites.length; i++) {
-            inDegree[prerequisites[i][0]]++;
-            if (graph.containsKey(prerequisites[i][1])) {
-                graph.get(prerequisites[i][1]).add(prerequisites[i][0]);
-            } else {
-                ArrayList<Integer> list = new ArrayList<Integer>();
-                list.add(prerequisites[i][0]);
-                graph.put(prerequisites[i][1], list);
-            }
-        }
-        LinkedList<Integer> queue = new LinkedList<Integer>();
-        for (int i = 0; i < numCourses; i++) {
-            if (inDegree[i] == 0)
-                queue.offer(i);
-        }
-        while (!queue.isEmpty()) {
-            int course = queue.poll();
-            List<Integer> subcourses = graph.get(course);
-            for (int i = 0; subcourses != null && i < subcourses.size(); i++) {
-                if (--inDegree[subcourses.get(i)] == 0)
-                    queue.offer(subcourses.get(i));
-            }
-        }
-        // 若此时还有节点的入度不为0，则说明环存在，返回false
-        for (int i = 0; i < numCourses; i++) {
-            if (inDegree[i] != 0)
-                return false;
-        }
-        return true;
-    }
-}
 
 // 使用DFS，并且将HashMap改为ArrayList，速度更快
 // ArrayList第i位存放的是i课程的先决课程precourse
-// dfs用1和2来标记状态，先将课程标记为1，若是在dfs过程中碰到了其它的1，说明出现了环
-// 若是在dfs过程中没有出现1，则从后往前以此标记为2，表示没有出现环
+// dfs用1和2来标记状态，先将课程标记为1表示等待学习，若是在dfs过程中碰到了其它的1，说明出现了环
+// 若是在dfs过程中没有出现1，则从后往前以此标记为2表示已经学习过了，并且此时在这个课程路径上没有环出现
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+
         for (int i = 0; i < numCourses; i++) {
             graph.add(new ArrayList<Integer>());
         }
+
         for (int i = 0; i < prerequisites.length; i++) {
             int course = prerequisites[i][0];
             int precourse = prerequisites[i][1];
             graph.get(course).add(precourse);
         }
+
         int[] visited = new int[numCourses];
         for (int i = 0; i < numCourses; i++) {
             if (dfs(i, graph, visited))
                 return false;
         }
+
         return true;
     }
 
@@ -96,11 +60,13 @@ class Solution {
             return true; // 说明出现了环
         if (visited[curr] == 2)
             return false;
+
         visited[curr] = 1; // 表示等待学习
-        for (int next : graph.get(curr)) {
-            if (dfs(next, graph, visited)) // 遍历它的邻居只要有任意一个true就说明有环
+        for (int pre : graph.get(curr)) {
+            if (dfs(pre, graph, visited))
                 return true; // 说明出现了环
         }
+
         visited[curr] = 2; // 表示已经学习过了
         return false;
     }
