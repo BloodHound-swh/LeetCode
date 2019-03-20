@@ -38,7 +38,7 @@ class Solution {
             while (nums[i] != i && nums[i] >= 0 && nums[i] < nums.length && nums[i] != nums[nums[i]]) { // 最后一个条件是防止[1, 1]
                 int tmp = nums[i];
                 nums[i] = nums[nums[i]];
-                nums[tmp] = tmp;
+                nums[tmp] = tmp; // // 注意这里的nums[tmp] 不要写成了nums[nums[i]]
             }
         }
         for (int i = 0; i < nums.length; i++) {
