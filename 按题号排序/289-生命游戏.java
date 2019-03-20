@@ -1,5 +1,6 @@
-/*
+/**
  * 生命游戏
+
 根据百度百科，生命游戏，简称为生命，是英国数学家约翰·何顿·康威在1970年发明的细胞自动机。
 
 给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。每个细胞具有一个初始状态 live（1）即为活细胞， 或 dead（0）即为死细胞。每个细胞与其八个相邻位置（水平，垂直，对角线）的细胞都遵循以下四条生存定律：
@@ -32,6 +33,9 @@
 本题中，我们使用二维数组来表示面板。原则上，面板是无限的，但当活细胞侵占了面板边界时会造成问题。你将如何解决这些问题？
  */
 
+// 关键在于如何记录每个点的当前状态和下一状态
+
+
 // dead <- dead 00
 // dead <- live 01
 // live <- dead 10
@@ -39,20 +43,23 @@
 // 原地算法：用两位数来表示，个位表示当前状态，十位表示下一个状态。状态更新就用%10求余即可
 class Solution {
     public void gameOfLife(int[][] board) {
-        if (board == null || board.length == 0 || board[0].length == 0)
+        if (board == null || board.length == 0)
             return;
+
         int m = board.length;
         int n = board[0].length;
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                int x = getLiveNum(board, i, j);
+                int nearLive = getLiveNum(board, i, j);
                 if (board[i][j] == 0) {
-                    if (x == 3)
-                        board[i][j] += 10;
+                    if (nearLive == 3) {
+                        board[i][j] = 10;
+                    }
                 } else {
-                    if (x == 2 || x == 3)
-                        board[i][j] += 10;
+                    if (nearLive == 2 || nearLive == 3) {
+                        board[i][j] = 11;
+                    }
                 }
             }
         }
@@ -64,17 +71,19 @@ class Solution {
         }
     }
 
-    private int getLiveNum(int[][] board, int x, int y) {
-        int num = 0;
+    public int getLiveNum(int[][] board, int x, int y) {
+        int nearLive = 0;
         for (int i = x - 1; i <= x + 1; i++) {
             for (int j = y - 1; j <= y + 1; j++) {
                 if (i < 0 || j < 0 || i > board.length - 1 || j > board[0].length - 1 || (i == x && j == y))
                     continue;
                 if (board[i][j] % 10 == 1)
-                    num++;
+                    nearLive++;
+
             }
         }
-        return num;
+
+        return nearLive;
     }
 }
 
