@@ -63,7 +63,7 @@ class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         if (nums == null || nums.length == 0)
             return new int[0];
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder()); // 因为默认的排序是最小值在堆顶，所以需要reverse
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder()); // 因为默认的排序是最小值在堆顶，所以需要reverse，或者自己写一个Comparator
         int[] res = new int[nums.length + 1 - k];
         for (int i = 0; i < nums.length; i++) {
             // 把窗口最左边的数去掉
