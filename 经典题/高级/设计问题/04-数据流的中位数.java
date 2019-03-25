@@ -103,3 +103,36 @@ class MedianFinder {
         return maxheap.size() == minheap.size() ? (double) (maxheap.peek() + minheap.peek()) / 2.0 : maxheap.peek();
     }
 }
+
+
+class MedianFinder {
+
+    PriorityQueue<Integer> pq;
+    Stack<Integer> stack;
+
+    /** initialize your data structure here. */
+    public MedianFinder() {
+        pq = new PriorityQueue<>();
+        stack = new Stack<Integer>(new Comparator<Integer>() {
+            public int compare(Integer a, Integer b) {
+                return b - a;
+            }
+        });
+    }
+
+    public void addNum(int num) {
+        pq.offer(num);
+        stack.push(pq.poll());
+        if (pa.size() < stack.size()) {
+            pq.offer(stack.pop());
+        }
+    }
+
+    public double findMedian() {
+        if (pq.size() == stack.size()) {
+            return (pq.poll() + stack.pop()) / 2.0;
+        } else {
+            pq.poll();
+        }
+    }
+}
