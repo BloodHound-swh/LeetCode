@@ -105,7 +105,7 @@ class Solution {
             int mid = (left + right) / 2;
             if (nums[mid] == target)
                 return mid;
-            if (nums[left] <= nums[mid]) { // 这里的等号不能去掉。。。
+            if (nums[left] <= nums[mid]) { // 注意等号，如输入为[3,1]要求找到1。
                 if (nums[left] <= target && nums[mid] >= target)
                     right = mid - 1;
                 else
