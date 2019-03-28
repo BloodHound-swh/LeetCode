@@ -18,8 +18,7 @@
 // 未看答案，一脸懵逼。。。
 
 
-// 答案一
-// 使用Collection对区间按照start的大小排序，然后对每个区间进行判定
+
 /*
  * Definition for an interval.
  * public class Interval {
@@ -29,6 +28,9 @@
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
+
+// 答案一
+// 使用Collection对区间按照start的大小排序，然后对每个区间进行判定
 class Solution {
     public List<Interval> merge(List<Interval> intervals) {
         if (intervals == null || intervals.size() <= 1)
