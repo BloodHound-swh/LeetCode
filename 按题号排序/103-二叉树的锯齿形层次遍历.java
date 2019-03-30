@@ -37,38 +37,39 @@
 // 当leftToRight位true，则先左后右存储下一层的元素在list的末尾，否则先右后左的存储下一层元素在list的开头
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> res = new LinkedList<>();
+        List<List<Integer>> res = new ArrayList<>();
         if (root == null)
             return res;
-        LinkedList<TreeNode> list = new LinkedList<>();
-        list.add(root);
+        Deque<TreeNode> dq = new LinkedList<>(); // 注意双向队列的实现和Queue一样也是LinkedList
+        dq.offer(root);
         boolean leftToRight = true;
-
-        while (!list.isEmpty()) {
-            int size = list.size();
-            LinkedList<Integer> clist = new LinkedList<>();
+        
+        while (!dq.isEmpty()) {
+            int size = dq.size();
+            List<Integer> list = new ArrayList<>();
             if (leftToRight) {
                 for (int i = 0; i < size; i++) {
-                    TreeNode curr = list.remove(0);
-                    clist.add(curr.val);
-                    if (curr.left != null)
-                        list.add(curr.left);
-                    if (curr.right != null)
-                        list.add(curr.right);
+                    TreeNode node = dq.poll();
+                    list.add(node.val);
+                    if (node.left != null)
+                        dq.offer(node.left);
+                    if (node.right != null)
+                        dq.offer(node.right);
                 }
             } else {
                 for (int i = 0; i < size; i++) {
-                    TreeNode curr = list.remove(list.size() - 1);
-                    clist.add(curr.val);
-                    if (curr.right != null)
-                        list.add(0, curr.right);
-                    if (curr.left != null)
-                        list.add(0, curr.left);
+                    TreeNode node = dq.pollLast();
+                    list.add(node.val);
+                    if (node.right != null) // 注意这里是先放right,且放在首端
+                        dq.offerFirst(node.right);
+                    if (node.left != null)
+                        dq.offerFirst(node.left);
                 }
             }
-            res.add(clist);
+            res.add(list);
             leftToRight = !leftToRight;
         }
+        
         return res;
     }
 }
