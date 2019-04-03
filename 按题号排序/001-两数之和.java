@@ -36,6 +36,26 @@ class Solution {
     }
 }
 
+// 未看答案版二，个人觉得我的答案更好
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int[] res = new int[2];
+
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                res[0] = map.get(target - nums[i]);
+                res[1] = i;
+            } else {
+                if (!map.containsKey(nums[i]))
+                    map.put(nums[i], i);
+            }
+        }
+
+        return res;
+    }
+}
+
 // 答案一，超时，暴力循环
 class Solution {
     public int[] twoSum(int[] nums, int target) {
