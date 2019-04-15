@@ -15,6 +15,23 @@
 
 // 未看答案没有做出，未能找出何时更新子串和的方法
 
+// 第二次复习时，感觉写比三个答案更简洁
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxSum = nums[0];
+        int sum = nums[0];
+        
+        for (int i = 1; i < nums.length; i++) {
+            if (sum < 0)
+                sum = 0;
+            sum += nums[i];
+            maxSum = Math.max(maxSum, sum);
+        }
+        
+        return maxSum;
+    }
+}
+
 // 答案一
 // 可使用动态规划来解决。时间复杂度为O(n)。假设已知0, .., k的和sum[k]以后，则0, ..., k+1的和sum[k+1]分为以下两种情况：
 // 1）若sum[k]>=0，则sum[k+1]=sum[k]+A[k+1]。
