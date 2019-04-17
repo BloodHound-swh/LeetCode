@@ -84,3 +84,31 @@ class Solution {
         return res;
     }
 }
+
+// 第二次复习，其实就是中序遍历稍微改改就行。
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        Stack<TreeNode> stack = new Stack<>();
+        
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+        
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            k--;
+            if (k == 0)
+                return node.val;
+            if (node.right != null) {
+                node = node.right;
+                while (node != null) {
+                    stack.push(node);
+                    node = node.left;
+                }
+            }
+        }
+        
+        return -1;
+    }
+}
