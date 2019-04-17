@@ -53,3 +53,30 @@ class Solution {
         return left == null ? right : left; // 如果发现了目标节点，则继续向上标记为该目标节点。这才是最后真正的输出语句
     }
 }
+
+// 第二次复习
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || p == null || q == null)
+            return root;
+        
+        TreeNode node = helper(root, p, q);
+        
+        return node;
+    }
+    
+    public TreeNode helper(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null)
+            return null;
+        if (root == p || root == q)
+            return root;
+        
+        TreeNode left = helper(root.left, p, q);
+        TreeNode right = helper(root.right, p, q);
+        
+        if (left != null && right != null)
+            return root;
+        
+        return left == null ? right : left;
+    }
+}
