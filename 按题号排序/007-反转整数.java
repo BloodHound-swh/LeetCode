@@ -50,6 +50,8 @@ class Solution {
             flag = -1;
             x = flag * x;
         }
+
+        // 注意：-1 * Integer.MIN_VALUE = Integer.MIN_VALUE
         while (x > 0) {
             int temp = x % 10;
             res = res * 10 + temp;
