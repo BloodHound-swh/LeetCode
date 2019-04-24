@@ -49,12 +49,13 @@
 class Solution {
     public int openLock(String[] deadends, String target) {
         String start = "0000";
-        Set<String> dead = new HashSet();
-        for (String d : deadends)
+        Set<String> dead = new HashSet<>();
+        for (String d : deadends) {
             dead.add(d);
+        }
         if (dead.contains(start))
             return -1;
-        if (target == start)
+        if (start == target)
             return 0;
 
         Queue<String> queue = new LinkedList<>();
@@ -63,27 +64,29 @@ class Solution {
         Set<String> visited = new HashSet<>();
         visited.add(start);
 
-        int steps = 0;
+        int step = 0;
         while (!queue.isEmpty()) {
-            steps++;
+            step++;
             int size = queue.size();
             for (int s = 0; s < size; s++) {
-                String node = queue.poll();
+                String str = queue.poll();
                 for (int i = 0; i < 4; i++) {
                     for (int j = -1; j <= 1; j += 2) {
-                        char[] chars = node.toCharArray();
-                        chars[i] = (char) (((chars[i] - '0') + j + 10) % 10 + '0'); // +10是为了把-1遍成9，%10是为了把10变成0
-                        String next = new String(chars); // 将数组转为字符串
+                        char[] chars = str.toCharArray();
+                        chars[i] = (char) ((chars[i] - '0' + j + 10) % 10 + '0');
+                        String next = new String(chars); // 数组转字符串
                         if (next.equals(target)) // 注意这里使用的是equals
-                            return steps;
+                            return step;
                         if (dead.contains(next) || visited.contains(next))
                             continue;
+
                         visited.add(next);
                         queue.offer(next);
                     }
                 }
             }
         }
+
         return -1;
     }
 }
