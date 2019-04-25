@@ -53,3 +53,29 @@ class Solution {
         return dp[1][n];
     }
 }
+
+
+// 虽然道理上将好像也需要比较k==i和k==j的时候，但实际上发现并不需要。。。
+class Solution {
+    public int getMoneyAmount(int n) {
+        int[][] dp = new int[n + 1][n + 1];
+        for (int j = 2; j <= n; j++) {
+            for (int i = j - 1; i > 0; i--) {
+                int localMin = Integer.MAX_VALUE;
+                for (int k = i; k <= j; k++) {
+                    int max;
+                    if (k == i) {
+                        max = k + dp[k + 1][j];
+                    } else if (k == j) {
+                        max = k + dp[i][k - 1];
+                    } else {
+                        max = k + Math.max(dp[i][k - 1], dp[k + 1][j]);
+                    }
+                    localMin = Math.min(localMin, max);
+                }
+                dp[i][j] = i + 1 == j ? i : localMin;// 当i == j - 1时，dp[i][j]即为i j中的较小者i
+            }
+        }
+        return dp[1][n];
+    }
+}
