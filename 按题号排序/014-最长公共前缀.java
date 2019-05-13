@@ -51,7 +51,7 @@ public class Solution {
     public String longestCommonPrefix(String[] strs) {
         if (strs == null || strs.length == 0)
             return "";
-        String res = new String();
+        StringBuilder res = new StringBuilder();
         for (int j = 0; j < strs[0].length(); ++j) {
             char c = strs[0].charAt(j);
             for (int i = 1; i < strs.length; ++i) {
@@ -59,32 +59,26 @@ public class Solution {
                     return res;
                 }
             }
-            res += Character.toString(c);
+            res.append(c);
         }
-        return res;
+        return res.toString();
     }
 }
 
 // 答案一
-// 取字符串数组的第一个元素作为初始prefix，然后用j来表示之后每个元素与第一个元素重复的位数。每次循环，j置零进行比较。
-// 而prefix每次都截取0到j的长度，保证prefix为公用的部分。
+// 从前往后枚举字符串的每一列，先比较每个字符串相同列上的字符（即不同字符串相同下标的字符）然后再进行对下一列的比较。
 class Solution {
     public String longestCommonPrefix(String[] strs) {
-        if (strs == null || strs.length == 0) {
+        if (strs == null || strs.length == 0)
             return "";
-        }
-        String prefix = strs[0];
-        for (int i = 1; i < strs.length; i++) {
-            int j = 0;
-            while (j < strs[i].length() && j < prefix.length() && strs[i].charAt(j) == prefix.charAt(j)) {
-                j++;
+        for (int i = 0; i < strs[0].length(); i++) {
+            char c = strs[0].charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                if (i == strs[j].length() || strs[j].charAt(i) != c)
+                    return strs[0].substring(0, i);
             }
-            if (j == 0) {
-                return "";
-            }
-            prefix = prefix.substring(0, j);
         }
-        return prefix;
+        return strs[0];
     }
 }
 
