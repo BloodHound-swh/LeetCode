@@ -39,15 +39,15 @@ class Solution {
 // 我们要做的就是求sums[mid] - sums[i] < s，这样的话，就将我们的问题转化为二分搜索的问题
 class Solution {
     public int minSubArrayLen(int s, int[] nums) {
-        if(nums == null || nums.length == 0) 
+        if (nums == null || nums.length == 0)
             return 0;
         int len = nums.length;
         int res = len + 1;
-        int[] sums = new int[len+1];
-        for(int i=1; i<len+1; i++){
-            sums[i] = nums[i-1] + sums[i-1];
+        int[] sums = new int[len + 1];
+        for (int i = 1; i < len + 1; i++) {
+            sums[i] = nums[i - 1] + sums[i - 1];
         }
-        
+
         for (int i = 0; i < len; i++) {
             int left = i + 1;
             int right = len;
@@ -59,7 +59,7 @@ class Solution {
                     right = mid - 1;
                 }
             }
-            if (left == len + 1) 
+            if (left == len + 1)
                 break;
             res = Math.min(res, left - i);
         }
