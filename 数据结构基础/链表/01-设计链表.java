@@ -111,6 +111,12 @@ class MyLinkedList {
             addAtHead(val);
             return;
         }
+        
+        // LeetCode增加了测试样例，出现了负数，所以要加上去
+        if (index < 0) {
+            index = index + this.length + 1;
+        }
+
         Node p = new Node(val);
         Node temp = head;
         int cnt = 0;
@@ -227,6 +233,11 @@ class MyLinkedList {
         if (index > this.length) {// 越界
             return;
         }
+
+        if (index < 0) {
+            index = index + this.length + 1;
+        }
+
         while (counter != (index - 1)) {// 在原有链表里
             temp = temp.next;
             counter++;
@@ -245,6 +256,7 @@ class MyLinkedList {
         Node curr = head;
         if (index == 0) {// 要删除头结点，直接让head指向下一个结点，GC会回收
             head = curr.next;
+            return;
         }
         Node current = head;
         Node pre = null;
