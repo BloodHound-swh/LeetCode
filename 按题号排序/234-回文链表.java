@@ -22,7 +22,7 @@ class Solution {
         ListNode p1 = head;
         ListNode p2 = head;
 
-        while (p2 != null && p2.next != null) { // p2 != null 不可以少，因为p2 == null 但是p2.next 却不一定为null，考虑内存关系
+        while (p2 != null && p2.next != null) { 
             p1 = p1.next;
             p2 = p2.next.next;
         }
@@ -60,7 +60,7 @@ class Solution {
         ListNode slow = head;
         ListNode fast = head;
 
-        while (fast != null && fast.next != null) {
+        while (fast.next != null && fast.next.next != null) { // 注意这里的判定条件
             slow = slow.next;
             fast = fast.next.next;
         }
