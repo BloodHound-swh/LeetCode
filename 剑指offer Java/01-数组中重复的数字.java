@@ -48,7 +48,7 @@ public class Solution {
                     duplication[0] = numbers[i];
                     return true;
                 }else{
-                    int temp = numbers[numbers[i]];
+                    int temp = numbers[numbers[i]]; // 注意这里交换的顺序，很容易出错先改变了numbers[i]的值而导致交换失败
                     numbers[numbers[i]] = numbers[i];
                     numbers[i] = temp;
                 }
