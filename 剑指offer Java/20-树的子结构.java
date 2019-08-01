@@ -6,6 +6,7 @@
 
 // 递归思想，如果根节点相同则递归调用IsSubtree()，如果根节点不相同，则判断root1的左子树和roo2是否相同，再判断右子树和root2是否相同;
 // 注意节点为空的条件，HasSubTree中，只要有树为空就返回false; IsSubtree中，要先判断root2，如果root2为空，则说明第二棵树遍历完了，即匹配成功。
+// 注意与leetcode的不同，leetcode认为中间部分包含子树不算，所以递归的终止条件判定是不同的。
 public class Solution {
     public boolean HasSubtree(TreeNode root1, TreeNode root2) {
         if (root1 == null || root2 == null)
