@@ -10,10 +10,10 @@
 // 贪心算法
 // 假设当前栈顶元素是2，且popA序列中下一个数也是2，那么久必须立刻从栈中把这个值pop出来，否则顺序就不对了
 public class Solution {
-    public boolean IsPopOrder(int [] pushA,int [] popA) {
-      int N = popA.length;
+    public boolean IsPopOrder(int[] pushA, int[] popA) {
+        int N = popA.length;
         Stack<Integer> stack = new Stack<>();
-        
+
         int j = 0;
         for (int x : pushA) {
             stack.push(x);
@@ -22,7 +22,7 @@ public class Solution {
                 j++;
             }
         }
-        
+
         return j == N;
     }
 }
