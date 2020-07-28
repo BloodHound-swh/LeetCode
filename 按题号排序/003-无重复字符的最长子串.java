@@ -94,3 +94,24 @@ class Solution {
         return max;
     }
 }
+
+// 思想同上
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0)
+            return 0;
+        int res = 0;
+        boolean[] used = new boolean[128];
+        for (int i = 0, j = 0; i < s.length();) {
+            if (used[s.charAt(i)] == false) {
+                used[s.charAt(i)] = true;
+                res = Math.max(res, i - j + 1);
+                i++;
+            } else {
+                used[s.charAt(j++)] = false;
+            }
+        }
+
+        return res;
+    }
+}
