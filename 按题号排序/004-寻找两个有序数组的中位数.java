@@ -63,3 +63,41 @@ class Solution {
         return (c1 + c2) * 0.5;
     }
 }
+
+
+// 方法二，使用二分法确定两个数组分别需要出多少个数字作为合并数组的左半边（用n1Left和n2Left来表示）
+// 比较L1与R2以及L2与R1可以确定二分法的指针移动方向
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        
+        if (n1 > n2)
+            return findMedianSortedArrays(nums2, nums1);
+
+        int len = n1 + n2;
+        int start = 0, end = n1;
+        int n1Left, n2Left;
+
+        while (start <= end) {
+            n1Left = (start + end) / 2;
+            n2Left = (len + 1) / 2 - n1Left;
+            double L1 = (n1Left <= 0) ? Integer.MIN_VALUE : nums1[n1Left - 1];
+            double L2 = (n2Left <= 0) ? Integer.MIN_VALUE : nums2[n2Left - 1];
+            double R1 = (n1Left >= n1) ? Integer.MAX_VALUE : nums1[n1Left];
+            double R2 = (n2Left >= n2) ? Integer.MAX_VALUE : nums2[n2Left];
+            if (L1 > R2) {
+                end = n1Left - 1;
+            } else if (L2 > R1) {
+                start = n1Left + 1;
+            } else {
+                if (len % 2 == 0) {
+                    return (Math.max(L1, L2) + Math.min(R1, R2)) / 2;
+                } else {
+                    return Math.max(L1, L2);
+                }
+            }
+        }
+        return -1;
+    }
+}
