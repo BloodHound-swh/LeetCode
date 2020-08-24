@@ -138,3 +138,36 @@ public class Solution {
         return base * sign;
     }
 }
+
+// 答案三，思想同上
+class Solution {
+    public int myAtoi(String str) {
+        if (str == null) {
+            return 0;
+        }
+        str = str.trim();
+        if (str.length() == 0) {
+            return 0;
+        }
+        int res = 0;
+        int i = 0;
+        int flag = 1;
+        if (str.charAt(i) == '-') {
+            flag = -1;
+        }
+        if (str.charAt(i) == '+' || str.charAt(i) == '-') {
+            i++;
+        }
+
+        while (i < str.length() && str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+            int r = str.charAt(i) - '0';
+            if (res > Integer.MAX_VALUE / 10 || (res == Integer.MAX_VALUE / 10 && str.charAt(i) - '0' > 7)) {
+                return flag > 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            }
+            res = res * 10 + r;
+            i++;
+        }
+
+        return flag > 0 ? res : -res;
+    }
+}
