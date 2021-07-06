@@ -31,7 +31,7 @@
 
 
 // https://www.youtube.com/watch?v=QXNvEz-GwQ4&t=361s
-// 根据上面的连接修改的答案
+// 根据上面的链接修改的答案
 class Solution {
     public boolean isNumber(String s) {
         if (s == null)
