@@ -31,7 +31,7 @@ class Solution {
             res.add(new LinkedList<Integer>(clist));
         } else {
             for (int i = 0; i < nums.length; i++) {
-                if (!set.contains(nums[i])) {
+                if (!se t.contains(nums[i])) {
                     clist.add(nums[i]);
                     int last = clist.size() - 1;
                     set.add(nums[i]);
@@ -75,7 +75,7 @@ class Solution {
         List<List<Integer>> res = new ArrayList<>();
         if (nums == null || nums.length == 0)
             return res;
-        helper(res.new ArrayList<>(), nums);
+        helper(res, new ArrayList<Integer>(), nums);
         return res;
     }
 
