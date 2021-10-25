@@ -17,6 +17,9 @@
 2 <= n <= 100000
  */
 
+// 若 nums[i] = i -> 说明此数字已在对应索引位置，无需交换，因此跳过
+// 若 nums[nums[i]] = nums[i] -> 代表索引nums[i]处和索引i处的元素值都为nums[i]，即找到一组重复值，返回此值nums[i]
+// 否则 交换索引为i和nums[i]的元素值，将此数字交换至对应索引位置
 class Solution {
     public int findRepeatNumber(int[] nums) {
         int i = 0;
@@ -37,23 +40,16 @@ class Solution {
     }
 }
 
-class Solution2 {
-    public boolean findNumberIn2DArray(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-            return false;
-        }
-        int rows = matrix.length, columns = matrix[0].length;
-        int row = 0, column = columns - 1;
-        while (row < rows && column >= 0) {
-            int num = matrix[row][column];
-            if (num == target) {
-                return true;
-            } else if (num > target) {
-                column--;
-            } else {
-                row++;
+class Solution {
+    public int findRepeatNumber(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (set.contains(nums[i])) {
+                return nums[i];
             }
+            set.add(nums[i]);
         }
-        return false;
+
+        return -1;
     }
 }
