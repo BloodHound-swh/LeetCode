@@ -94,3 +94,62 @@ class Solution {
         return res;
     }
 }
+
+// 普通二分法，但是不是严格的nlogn复杂度
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        int p = -1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                p = mid;
+                break;
+            }
+            if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        if (p == -1) {
+            return new int[] { -1, -1 };
+        } else {
+            int a = p, b = p;
+            while (a > 0 && nums[a - 1] == target)
+                a--;
+            while (b < nums.length - 1 && nums[b + 1] == target)
+                b++;
+            return new int[] { a, b };
+        }
+    }
+}
+
+// leftIdx是第一个比「target - 1」大的元素的索引，也就是target的第一个索引；
+// rightIdx呢，binarySearch(nums, target)返回的是第一个比target大的元素，减1则是返回target的最后一个元素了。
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int leftIdx = binarySearch(nums, target - 1);
+        int rightIdx = binarySearch(nums, target) - 1;
+        if (leftIdx <= rightIdx && nums[leftIdx] == target) {
+            return new int[]{leftIdx, rightIdx};
+        } 
+        return new int[]{-1, -1};
+    }
+
+    // 第一个大于 target 的数的下标
+    public int binarySearch(int[] nums, int target) {
+        int left = 0, right = nums.length - 1, ans = nums.length;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] > target) {
+                right = mid - 1;
+                ans = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+}
