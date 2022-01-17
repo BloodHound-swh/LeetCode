@@ -1,19 +1,28 @@
 /**
- * 接雨水
-
+ * 42. 接雨水
 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
 
+ 
+
+示例 1：
 
 
-上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。 感谢 Marcos 贡献此图。
 
-示例:
+输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]
+输出：6
+解释：上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。 
+示例 2：
 
-输入: [0,1,0,2,1,0,1,3,2,1,2,1]
-输出: 6
+输入：height = [4,2,0,3,2,5]
+输出：9
+ 
+
+提示：
+
+n == height.length
+1 <= n <= 2 * 10^4
+0 <= height[i] <= 10^5
  */
-
-// 看每个位置接的水和两边的最高点以及自身高度有什么关系
 
 // 方法一，用两个数组分别记录每一个位置左边的最高高度和右边的最高高度
 // 水量就取决于两个最高高度低的那一个减去当前位置自身的高度
@@ -55,7 +64,7 @@ class Solution {
     public int trap(int[] height) {
         if (height == null || height.length < 3)
             return 0;
-        int sum = 0;
+        int max = 0;
         int leftMax = 0;
         int rightMax = 0;
         int i = 0;
@@ -64,13 +73,13 @@ class Solution {
             leftMax = Math.max(leftMax, height[i]);
             rightMax = Math.max(rightMax, height[j]);
             if (leftMax < rightMax) {
-                sum += leftMax - height[i];
+                max += leftMax - height[i];
                 i++;
             } else {
-                sum += rightMax - height[j];
+                max += rightMax - height[j];
                 j--;
             }
         }
-        return sum;
+        return max;
     }
 }
