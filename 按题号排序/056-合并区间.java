@@ -106,3 +106,33 @@ class Solution {
 
     }
 }
+
+// 题目返回值修改后的解
+// 使用Collection对区间按照start的大小排序，然后对每个区间进行判定
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            return null;
+        }
+
+        if (intervals.length == 1) {
+            return intervals;
+        }
+
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+        List<int[]> res = new ArrayList<>();
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] <= end) {
+                end = Math.max(end, intervals[i][1]);
+            } else {
+                res.add(new int[]{start, end});
+                start = intervals[i][0];
+                end = intervals[i][1];
+            }
+        }
+        res.add(new int[]{start, end});
+        return res.toArray(new int[res.size()][]);
+    }
+}
