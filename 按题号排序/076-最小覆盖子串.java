@@ -65,3 +65,71 @@ class Solution {
         return map;
     }
 }
+
+// https://leetcode-cn.com/problems/minimum-window-substring/solution/zui-xiao-fu-gai-zi-chuan-by-leetcode-solution/
+// 滑动窗口，官方视频题解讲的非常好
+class Solution {
+    public String minWindow(String s, String t) {
+        int sLen = s.length();
+        int tLen = t.length();
+
+        if (sLen == 0 || tLen == 0 || sLen < tLen) {
+            return "";
+        }
+
+        char[] sCharArray = s.toCharArray();
+        char[] tCharArray = t.toCharArray();
+
+        int[] winFreq = new int[128];
+        int[] tFreq = new int[128];
+
+        for (char c : tCharArray) {
+            tFreq[c]++;
+        }
+
+        // 滑动窗口内部包含多少t中的字符，对应字符频数超过不重复计算
+        int match = 0;
+        int minLen = sLen + 1;
+        int begin = 0;
+
+        // [left, right)
+        int left = 0;
+        int right = 0;
+        while (right < sLen) {
+            if (tFreq[sCharArray[right]] == 0) {
+                right++;
+                continue;
+            }
+            if (winFreq[sCharArray[right]] < tFreq[sCharArray[right]]) {
+                match++;
+            }
+            winFreq[sCharArray[right]]++;
+            right++;
+
+            while (match == tLen) {
+                if (right - left < minLen) {
+                    minLen = right - left;
+                    begin = left;
+                }
+
+                if (tFreq[sCharArray[left]] == 0) {
+                    left++;
+                    continue;
+                }
+
+                if (winFreq[sCharArray[left]] == tFreq[sCharArray[left]]) {
+                    match--;
+                }
+
+                winFreq[sCharArray[left]]--;
+                left++;
+            }
+        }
+
+        if (minLen == sLen + 1) {
+            return "";
+        }
+
+        return s.substring(begin, begin + minLen);
+    }
+}

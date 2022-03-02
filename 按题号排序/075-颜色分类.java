@@ -132,3 +132,29 @@ class Solution {
         }
     }
 }
+
+// 单指针：使用指针pt
+// 我们可以考虑对数组进行两次遍历。在第一次遍历中，我们将数组中所有的0交换到pt之前。
+// 在第二次遍历中，我们将数组中所有的1交换到pt之前。此时，所有的2都出现在pt以及pt之后，这样我们就完成了排序。
+class Solution {
+    public void sortColors(int[] nums) {
+        int n = nums.length;
+        int ptr = 0;
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] == 0) {
+                int temp = nums[i];
+                nums[i] = nums[ptr];
+                nums[ptr] = temp;
+                ++ptr;
+            }
+        }
+        for (int i = ptr; i < n; ++i) {
+            if (nums[i] == 1) {
+                int temp = nums[i];
+                nums[i] = nums[ptr];
+                nums[ptr] = temp;
+                ++ptr;
+            }
+        }
+    }
+}

@@ -105,3 +105,30 @@ class Solution {
         return res;
     }
 }
+
+// 回溯法
+// k表示子集的长度，start表示起始坐标
+class Solution {
+    List<List<Integer>> res = new ArrayList<>();
+
+    public List<List<Integer>> subsets(int[] nums) {
+        for (int k = 0; k <= nums.length; k++) {
+            backTrack(0, k, new ArrayList<Integer>(), nums);
+        }
+
+        return res;
+    }
+
+    public void backTrack(int start, int k, List<Integer> cur, int[] nums) {
+        if (k == 0) {
+            res.add(new ArrayList<Integer>(cur));
+            return;
+        } 
+
+        for (int i = start; i < nums.length; i++) {
+            cur.add(nums[i]);
+            backTrack(i + 1, k - 1, cur, nums);
+            cur.remove(cur.size() - 1);
+        }
+    }
+}
