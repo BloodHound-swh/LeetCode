@@ -31,6 +31,39 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+// 复习之未看答案版
+class Solution {
+    Map<Integer, Integer> indexMap = new HashMap<>();
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder == null || inorder == null || preorder.length == 0 || inorder.length == 0) {
+            return null;
+        }
+        for (int i = 0; i < inorder.length; i++) {
+            indexMap.put(inorder[i], i);
+        }
+
+        return helper(preorder, inorder, 0, inorder.length - 1, 0, preorder.length - 1);
+    }
+
+    public TreeNode helper(int[] preorder, int[] inorder, int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
+        if (preorderLeft > preorderRight || inorderLeft > inorderRight) {
+            return null;
+        }
+
+        TreeNode root = new TreeNode(preorder[preorderLeft]);
+        int inorderRootIdx = indexMap.get(preorder[preorderLeft]);
+        int len = inorderRootIdx - inorderLeft;
+
+        // 这里可以优化，inorderLeft + len - 1 = inorderRootIdx - 1, inorderLeft + len + 1 = inorderRootIdx + 1
+        root.left = helper(preorder, inorder, preorderLeft + 1, preorderLeft + len, inorderLeft, inorderLeft + len - 1);
+        root.right = helper(preorder, inorder, preorderLeft + len + 1, preorderRight, inorderLeft + len + 1, inorderRight);
+
+        return root;
+    }
+}
+
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder == null || inorder == null || preorder.length == 0) {
