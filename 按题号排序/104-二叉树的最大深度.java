@@ -38,6 +38,27 @@ class Solution {
     }
 }
 
+// 很简单的递归思路，用max来代表最大深度，找好退出条件。
+class Solution {
+
+    public Integer max = 0;
+
+    public int maxDepth(TreeNode root) {
+        helper(root, 0);
+        return max;
+    }
+
+    public void helper(TreeNode node, Integer tmp) {
+        if (node == null) {
+            return;
+        }
+        tmp++;
+        max = Math.max(max, tmp);
+        helper(node.left, tmp);
+        helper(node.right, tmp);
+    }
+}
+
 // 答案一
 // 递归思想—：找到每一层所重复处理的方法，再找到边界条件，就可以确定递归。
 // 树的最大深度等于左子树和右子树最大深度的最大值加1，以此递归即可，注意边界条件。
