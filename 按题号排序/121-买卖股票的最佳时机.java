@@ -42,6 +42,25 @@ class Solution {
     }
 }
 
+// 未看答案版2
+class Solution {
+    public int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            }
+            int profit = prices[i] - minPrice;
+            if (profit > 0) {
+                maxProfit = Math.max(maxProfit, profit);
+            }
+        }
+
+        return maxProfit;
+    }
+}
+
 // 答案，与上面相比，简洁一些
 // 只需要遍历一次数组，用一个变量记录遍历过数中的最小值，然后每次计算当前值和这个最小值之间的差值最为利润，然后每次选较大的利润来更新。
 // 当遍历完成后当前利润即为所求

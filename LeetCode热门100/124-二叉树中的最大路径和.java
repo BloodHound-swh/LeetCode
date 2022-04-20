@@ -1,5 +1,5 @@
 /**
- * 二叉树中的最大路径和
+ * 124.二叉树中的最大路径和
 
 给定一个非空二叉树，返回其最大路径和。
 
@@ -27,30 +27,45 @@
 输出: 42
  */
 
-// 没思路，重点在于路径不能重复
 
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 
-// 对于某一个节点来说，路径和为自己的值加上左右节点返回值之和（左右节点返回值需与0）比较
-// 对于该节点的父节点来说，由于路径不能重复，所以返回到父节点的路径只能是该节点的左子节点加自己，或者右子节点加自己向上返回
+// 递归，用res来记录最大值
 class Solution {
-    int res;
+
+    public Integer res = Integer.MIN_VALUE;
 
     public int maxPathSum(TreeNode root) {
-        if (root == null)
-            return 0;
-        res = Integer.MIN_VALUE;
         helper(root);
         return res;
     }
 
-    public int helper(TreeNode root) {
-        if (root == null)
+    public int helper(TreeNode node) {
+        if (node == null) {
             return 0;
-        int left = Math.max(0, helper(root.left));
-        int right = Math.max(0, helper(root.right));
+        }
+
+        int left = Math.max(0, helper(node.left));
+        int right = Math.max(0, helper(node.right));
+
         // 更新结果res，此时相当于不会继续向父节点走动
-        res = Math.max(res, left + right + root.val);
+        res = Math.max(res, node.val + left + right);
+
         // 若继续向父节点走动，由于路径是不能返回重复走的，因此只能是当前的左右节点中的最大贡献值加当前节点自己的值
-        return Math.max(left, right) + root.val;
+        return Math.max(left, right) + node.val;
     }
 }
