@@ -16,8 +16,9 @@
 
 
 // 在这道题目中，就需要建立一个结果数组（是会随着状态转化函数的变化而变得更加的健全）。
-// 数组中的每个值，保存的是以该cell作为最右下角的元素构建正方形所能构建的最大的正方形的边长。
+// 数组中的每个值，保存的是以该cell作为最右下角的元素构建正方形所能构建的最大的正方形的"边长"。
 // 有了这个对状态的定义，我们就能够很好的建立我们的状态转移函数了~
+// dp(i,j)=min(dp(i−1,j),dp(i−1,j−1),dp(i,j−1))+1
 class Solution {
     public int maximalSquare(char[][] matrix) {
         if (matrix == null || matrix.length == 0)
@@ -46,5 +47,31 @@ class Solution {
         }
 
         return res * res;
+    }
+}
+
+// 官方题解，思路相同
+class Solution {
+    public int maximalSquare(char[][] matrix) {
+        int maxSide = 0;
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return maxSide;
+        }
+        int rows = matrix.length, columns = matrix[0].length;
+        int[][] dp = new int[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (matrix[i][j] == '1') {
+                    if (i == 0 || j == 0) {
+                        dp[i][j] = 1;
+                    } else {
+                        dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
+                    }
+                    maxSide = Math.max(maxSide, dp[i][j]);
+                }
+            }
+        }
+        int maxSquare = maxSide * maxSide;
+        return maxSquare;
     }
 }
