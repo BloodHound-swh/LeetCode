@@ -1,5 +1,5 @@
 /**
- * 回文链表
+ * 234. 回文链表
 
 请判断一个链表是否为回文链表。
 
@@ -15,30 +15,19 @@
 你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？
  */
 
- 
-// 未看答案版，偶数时正确，奇数时出现了问题，并且对于后半段应该反转才对
-class Solution {
-    public boolean isPalindrome(ListNode head) {
-        ListNode p1 = head;
-        ListNode p2 = head;
 
-        while (p2 != null && p2.next != null) { 
-            p1 = p1.next;
-            p2 = p2.next.next;
-        }
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 
-        while (p1 != null) {
-            if (head.val != p1.val)
-                return false;
-            head = head.next;
-            p1 = p1.next;
-        }
-
-        return true;
-    }
-}
-
-// 答案一
+// 找到中间位置，然后对后半部分进行反转链表的操作
 class Solution {
     public boolean isPalindrome(ListNode head) {
         if (head == null)
@@ -86,54 +75,6 @@ class Solution {
         }
 
         return pre;
-    }
-}
-
-// 答案二，先直接反转链表再比较，注意反转链表是先复制再反转
-class Solution {
-    public boolean isPalindrome(ListNode head) {
-        if (head == null || head.next == null)
-            return true;
-        ListNode cur = head;
-        ListNode pre = null;
-
-        while (cur != null) {
-            ListNode dummmy = new ListNode(cur.val); // 不可以对原链表进行操作
-            dummmy.next = pre;
-            pre = dummmy;
-            cur = cur.next;
-        }
-
-        while (pre != null) {
-            if (pre.val != head.val)
-                return false;
-            pre = pre.next;
-            head = head.next;
-        }
-        return true;
-    }
-}
-
-// 答案三，用stack
-class Solution {
-    public boolean isPalindrome(ListNode head) {
-
-        // 使用栈，此处 O(n) 时间复杂度和 O(n) 空间复杂度
-        Stack<Integer> stack = new Stack<>();
-        ListNode temp = head;
-        while (temp != null) {
-            stack.push(temp.val);
-            temp = temp.next;
-        }
-
-        while (!stack.isEmpty() && head != null) {
-            if (head.val != stack.pop()) {
-                return false;
-            }
-            head = head.next;
-        }
-
-        return true;
     }
 }
 
