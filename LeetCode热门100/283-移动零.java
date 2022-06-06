@@ -1,21 +1,29 @@
 /**
- * 移动零
-
+ * 283. 移动零
 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
 
-示例:
+请注意 ，必须在不复制数组的情况下原地对数组进行操作。
 
-输入: [0,1,0,3,12]
+ 
+
+示例 1:
+
+输入: nums = [0,1,0,3,12]
 输出: [1,3,12,0,0]
-说明:
+示例 2:
 
-必须在原数组上操作，不能拷贝额外的数组。
-尽量减少操作次数。
+输入: nums = [0]
+输出: [0]
+ 
 
+提示:
+
+1 <= nums.length <= 10^4
+-231 <= nums[i] <= 2^31 - 1
  */
 
 
-// 未看答案版
+// 双指针，直接将非零元素向前复制，然后将复制的最后一位之后的数字全部置零
 class Solution {
     public void moveZeroes(int[] nums) {
         int p1 = 0;
@@ -23,20 +31,20 @@ class Solution {
         while (p2 < nums.length) {
             if (nums[p2] == 0) {
                 p2++;
-                continue;
             } else {
                 nums[p1] = nums[p2];
-                p1++;
                 p2++;
+                p1++;
             }
         }
-        for (int i = p1; i < nums.length; i++) {
-            nums[i] = 0;
+
+        while (p1 < nums.length) {
+            nums[p1] = 0;
+            p1++;
         }
     }
 }
 
-// 答案一
 // 用两个指针，一个不停的向后扫，找到非零位置，然后和前面那个指针交换位置即可
 class Solution {
     public void moveZeroes(int[] nums) {
@@ -50,26 +58,6 @@ class Solution {
                 i++;
             }
             j++;
-        }
-    }
-}
-
-// 答案二
-// 直接将非零元素向前复制，然后将复制的最后一位之后的数字全部置零，此法可能更加符合题意，因为连temp这个额外空间都不需要了
-class Solution {
-    public void moveZeroes(int[] nums) {
-        int j = 0;
-        int len = nums.length;
-
-        for(int i = 0; i < len; i++){
-            if(nums[i] != 0){
-                nums[j] = nums[i];
-                j++;
-            }
-        }
-
-        for(int i = j; i < len; i++){
-            nums[i] = 0;
         }
     }
 }
