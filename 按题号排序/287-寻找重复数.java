@@ -44,3 +44,36 @@ class Solution {
         return lo;
     }
 }
+
+// 最简单的思路，使用set。但是面试肯定不加分
+class Solution {
+    public int findDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int n : nums) {
+            if (set.contains(n)) {
+                return n;
+            }
+            set.add(n);
+        }
+
+        return -1;
+    }
+}
+
+// 我们对nums数组建图，每个位置i连一条i→nums[i]的边。由于存在的重复的数字target，因此target这个位置一定有起码两条指向它的边，因此整张图一定存在环
+// 且我们要找到的target就是这个环的入口，那么整个问题就等价于寻找环的入口
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int slow = 0, fast = 0;
+        do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while (slow != fast);
+        slow = 0;
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
+}
