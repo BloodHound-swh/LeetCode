@@ -124,3 +124,24 @@ class Solution {
         return dp[amount] == Integer.MAX_VALUE -1? -1 : dp[amount];
     }
 }
+
+// https://leetcode.cn/problems/coin-change/solution/322-ling-qian-dui-huan-by-leetcode-solution/
+// 官方题解即可食用，dp思想
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int max = Integer.MAX_VALUE - 1;
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, max);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            for (int j = 0; j < coins.length; j++) {
+                if (i < coins[j]) {
+                    continue;
+                }
+                dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+            }
+        }
+
+        return dp[amount] == max ? -1 : dp[amount];
+    }
+}

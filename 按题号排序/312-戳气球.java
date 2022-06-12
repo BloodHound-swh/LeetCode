@@ -23,6 +23,7 @@
 
 
 // 答案
+// https://www.youtube.com/watch?v=Ci39lcoLbyw&t=198s
 // 先用coins[]来记录每个气球的值（并把0先戳破），且在左右边界各补上1
 // 再用maxCoin[i][j]来表示戳破(i,j)之间所有气球得到的最大值
 // 假设最后戳破(left, right)中的i位置的气球，则对于最后一步得到的分值为coins[i] * coins[left] * coins[right]
@@ -52,6 +53,35 @@ class Solution {
             }
         }
 
+        return maxCoin[0][n - 1];
+    }
+}
+
+// 同上
+class Solution {
+    public int maxCoins(int[] nums) {
+        int[] coins = new int[nums.length + 2];
+        int n = 1;
+        for (int coin : nums) {
+            // 相当于提前戳破了值为0的气球，减少一定的运算量
+            if (coin != 0) {
+                coins[n++] = coin;
+            }
+        }
+        // 根据题意，边界直接设置为1
+        coins[0] = 1;
+        coins[n] = 1;
+        n = n + 1;
+        // maxCoin[i][j]表示戳破(i,j)之间所有气球得到的最大值,注意此时n的值已经在上一步加了1
+        int[][] maxCoin = new int[n][n];
+        for (int len = 2; len < n; len++) {
+            for (int left = 0; left + len < n; left++) {
+                int right = left + len;
+                for (int i = left + 1; i <= right - 1; i++) {
+                    maxCoin[left][right] = Math.max(maxCoin[left][right], coins[left] * coins[i] * coins[right] + maxCoin[left][i] + maxCoin[i][right]);
+                }
+            }
+        }
         return maxCoin[0][n - 1];
     }
 }
