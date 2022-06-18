@@ -78,3 +78,34 @@ class Solution {
         return res;
     }
 }
+
+// 使用map记录出现次数，再使用一个size为k的优先队列来处理频率前k的数字
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int n : nums) {
+            map.put(n, map.getOrDefault(n, 0) + 1);
+        }
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> (o1[1] - o2[1]));
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            int n = entry.getKey();
+            int times = entry.getValue();
+            // int n = entry.getKey(), times = entry.getValue();
+            if (pq.size() == k) {
+                if (pq.peek()[1] < times) {
+                    pq.poll();
+                    pq.offer(new int[]{n, times});
+                }
+            } else {
+                pq.offer(new int[]{n, times});
+            }
+        }
+        int[] res = new int[k];
+        for (int i = 0; i < k; i++) {
+            res[i] = pq.poll()[0];
+        }
+
+        return res;
+    }
+}
