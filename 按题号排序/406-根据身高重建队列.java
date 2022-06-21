@@ -70,3 +70,27 @@ class Solution {
 
     }
 }
+
+// https://leetcode.cn/problems/queue-reconstruction-by-height/solution/xian-pai-xu-zai-cha-dui-dong-hua-yan-shi-suan-fa-g/
+// 一般这种数对，还涉及排序的，根据第一个元素正向排序，根据第二个元素反向排序，或者根据第一个元素反向排序，根据第二个元素正向排序，往往能够简化解题过程。
+// 首先对数对进行排序，按照数对的元素 1 降序排序，按照数对的元素 2 升序排序。
+// 原因是，按照第1个进行降序排序，对于每个元素，在其之前的元素的个数，就是大于等于他的元素的数量。按照第2个元素正向排序，我们希望k大的尽量在后面，减少插入list重排的操作次数。
+// 一句话解释插入原理：高个子的人是看不到低个子人的
+class Solution {
+    public int[][] reconstructQueue(int[][] people) {
+        List<int[]> res = new LinkedList<>();
+        Arrays.sort(people, (a, b) -> {
+            if (a[0] != b[0]) {
+                return b[0] - a[0];
+            } else {
+                return a[1] - b[1];
+            }
+        });
+        
+        for (int i = 0; i < people.length; i++) {
+            res.add(people[i][1], people[i]);
+        }
+
+        return res.toArray(new int[res.size()][]);
+    }
+}
