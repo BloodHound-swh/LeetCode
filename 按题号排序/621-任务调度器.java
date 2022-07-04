@@ -24,8 +24,9 @@ n 的取值范围为 [0, 100]。
 // 三种答案都是用的一个思路，只是写法不同而已
 
 // 答案一
-// 按照出现频率最多（假设频率为k）的将其分为了k块，然后每一轮向这k个区间个插入其他任务，如果不够n则加入idle凑齐n，这样 每个区间就是n + 1f
-// 若是最高频率元素为s个，那么最后就加上s，因为这s个频率相同的任务经过前面的分配都只剩下一个了。
+// https://leetcode.cn/problems/task-scheduler/solution/tong-zi-by-popopop/
+// 按照出现频率最多（假设频率为k）的将其分为了k块，然后每一轮向这k个区间个插入其他任务，如果不够n则加入idle凑齐n，这样每个区间最大长度就是n + 1
+// 若是最高频率元素为s个，那么最后一个区间的长度就为s，因为这s个频率相同的任务经过前面的分配都只剩下一个了。
 // 若是最高频率都用完了，但是还是没有把所有task执行完，那么总时间就是task的长度（我也不知道怎么证明）
 class Solution {
     public int leastInterval(char[] tasks, int n) {
@@ -46,6 +47,29 @@ class Solution {
         }
 
         return Math.max(tasks.length, (maxFreq - 1) * (n + 1) + maxFreqTask);
+    }
+}
+
+// https://leetcode.cn/problems/task-scheduler/solution/tong-zi-by-popopop/
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        int[] freq = new int[26];
+        for (char c : tasks) {
+            freq[c - 'A']++;
+        }
+
+        int maxTaskCount = 0;
+        int maxTaskFreq = 0;
+        for (int i = 0; i < freq.length; i++) {
+            if (freq[i] > maxTaskFreq) {
+                maxTaskFreq = freq[i];
+                maxTaskCount = 1;
+            } else if (freq[i] == maxTaskFreq) {
+                maxTaskCount++;
+            }
+        }
+
+        return Math.max(tasks.length, (maxTaskFreq - 1) * (n + 1) + maxTaskCount);
     }
 }
 
