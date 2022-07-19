@@ -1,5 +1,5 @@
 /**
- 组合两个表
+175. 组合两个表
 
 SQL架构
 表: Person
@@ -66,6 +66,13 @@ Address表:
 addressId = 1 包含了 personId = 2 的地址信息。
 */
 
-select FirstName, LastName, City, State
-from Person left join Address
-on Person.PersonId = Address.PersonId;
+-- 使用左外联结
+-- https://leetcode.cn/problems/combine-two-tables/solution/tu-jie-sqlmian-shi-ti-duo-biao-ru-he-cha-xun-by-ho/
+SELECT
+    Person.firstName,
+    Person.lastName,
+    Address.city,
+    Address.state
+FROM
+    Person
+    LEFT JOIN Address ON Person.personId = Address.personId;
